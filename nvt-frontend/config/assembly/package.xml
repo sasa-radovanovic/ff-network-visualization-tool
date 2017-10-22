@@ -24,5 +24,10 @@
                 <exclude>**/index.html</exclude>
             </excludes>
         </fileSet>
+        <fileSet>
+            <directory>static</directory>
+            <outputDirectory>/webroot/static</outputDirectory>
+            <filtered>false</filtered>
+        </fileSet>
     </fileSets>
 </assembly>
