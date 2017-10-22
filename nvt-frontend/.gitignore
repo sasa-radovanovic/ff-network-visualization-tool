@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+dist/
+npm-debug.log
+test/unit/coverage
+.idea/
+target
+server/public/build.js
+server/public/build.js.map
+.meteor
+.build
+.history/
+.vscode/

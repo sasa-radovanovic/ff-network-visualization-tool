@@ -1,0 +1,16 @@
+target/
+.DS_Store/
+.settings/
+.metadata/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+.project
+.classpath
+.checkstyle
+.externalToolBuilders/
+.idea
+*.iml
+context.xml
