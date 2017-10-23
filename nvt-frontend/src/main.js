@@ -4,7 +4,6 @@ console.clear()
 
 import Vue from 'vue'
 import App from './components/app/app'
-//import 'bootstrap/dist/css/bootstrap.css'
 import './main.css'
 import 'font-awesome/css/font-awesome.css'
 import router from './routes'

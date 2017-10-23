@@ -1,7 +1,7 @@
 <template lang="pug">
         v-toolbar(dark='', color='primary')
 
-                v-toolbar-title.white--text Network Visualization Tool
+                v-toolbar-title.white--text.title(@click="$router.push({path: '/'})") Network Visualization Tool
 
                 v-spacer
 
@@ -36,5 +36,7 @@
 
 
 <style scoped>
-
+    .title:HOVER {
+        cursor: pointer;
+    }
 </style>

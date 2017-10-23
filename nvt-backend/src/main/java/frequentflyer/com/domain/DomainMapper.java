@@ -42,6 +42,8 @@ public class DomainMapper {
         rotationDto.setOriginCityName(origin.getCity());
         rotationDto.setOriginCountry(origin.getCountry());
         rotationDto.setOriginTimezone(origin.getTimezone().getDisplayName());
+        rotationDto.setOriginLatitude(origin.getLatitude());
+        rotationDto.setOriginLongitude(origin.getLongitude());
 
 
         rotationDto.setDestinationIataCode(destination.getIataCode());
@@ -50,6 +52,10 @@ public class DomainMapper {
         rotationDto.setDestinationCityName(destination.getCity());
         rotationDto.setDestinationCountry(destination.getCountry());
         rotationDto.setDestinationTimezone(destination.getTimezone().getDisplayName());
+        rotationDto.setDestinationLatitude(destination.getLatitude());
+        rotationDto.setDestinationLongitude(destination.getLongitude());
+
+        rotationDto.setLocalDepartureTime(rotation.getLocalDepartureTime());
 
         // Set departure tine and length
         LocalTime lt = LocalTime.parse(rotation.getLocalDepartureTime());
@@ -67,24 +73,28 @@ public class DomainMapper {
             if (utcStandardized.getHour() < lt.getHour()) {
                 // readapt days
                 log.info("Timezone diff was > 0. Adapting frequencies to utc... ");
-                rotationDto.setDayMap(formDayMap(rotation.getFrequency(), -1));
+                rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), -1));
             } else {
-                rotationDto.setDayMap(formDayMap(rotation.getFrequency(), 0));
+                rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), 0));
             }
         } else if (tzDiff < 0) {
             if (utcStandardized.getHour() > lt.getHour()) {
                 // readapt days
                 log.info("Timezone diff was < 0. Adapting frequencies to utc... ");
-                rotationDto.setDayMap(formDayMap(rotation.getFrequency(), 1));
+                rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), 1));
             } else {
-                rotationDto.setDayMap(formDayMap(rotation.getFrequency(), 0));
+                rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), 0));
             }
         } else {
-            rotationDto.setDayMap(formDayMap(rotation.getFrequency(), 0));
+            rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), 0));
         }
+
+        rotationDto.setDayMap(formDayMap(rotation.getFrequency(), 0));
 
         rotationDto.setUtcDepartureTime(utcStandardized.format(dtf));
         rotationDto.setFlightTime(rotation.getFlightLength());
+        rotationDto.setId(rotation.getId());
+
 
         return rotationDto;
     }

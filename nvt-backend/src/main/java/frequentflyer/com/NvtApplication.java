@@ -74,7 +74,7 @@ public class NvtApplication implements CommandLineRunner {
 
 			combination = new Combination();
 			combination.setCombinationName("MyAirline");
-			combination.setCombinationColor("green");
+			combination.setCombinationColor("#6699ff");
 			combination = combinationRepository.save(combination);
 
 			Airport AMS = airportRepository.findByIataCode("AMS");

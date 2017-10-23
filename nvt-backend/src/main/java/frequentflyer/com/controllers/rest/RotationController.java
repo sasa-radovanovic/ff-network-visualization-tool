@@ -41,7 +41,7 @@ public class RotationController {
 
 
     @RequestMapping(value = "rotations", method = RequestMethod.DELETE)
-    public void createRotation(@RequestParam String rotationId) {
+    public void deleteRotation(@RequestParam String rotationId) {
         rotationService.removeRotation(Long.parseLong(rotationId));
     }
 

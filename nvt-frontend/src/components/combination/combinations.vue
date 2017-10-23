@@ -1,5 +1,6 @@
 <template lang="pug">
     div
+        snackbar(:text="text", :show="showSnackbar")
         v-flex.mt-5(xs8, offset-xs2)
             v-card
                 v-card-media(src="/static/card-header-1.png", height="200px")
@@ -10,12 +11,24 @@
 
                             td {{props.item.name}}
 
-                            td {{props.item.name}}
+                            td
+                                v-icon(large, :style="{'color' : props.item.color}") flight_land
 
                             td
-                                v-btn(color="primary", :to="{name: 'edit-combination', params: {combinationId: props.item.id}}") Edit
-                                v-btn(color="primary", :to="{name: 'static-animation', params: {combinationId: props.item.id}}") Static display
-                                v-btn(color="primary", :to="{name: 'dynamic-animation', params: {combinationId: props.item.id}}") Animate
+                                v-btn(color="primary",
+                                dark,
+                                :to="{name: 'edit-combination', params: {combinationId: props.item.id, name: props.item.name, color: props.item.color}}")
+                                    v-icon(dark, left) mode_edit
+                                    | Edit
+                                v-btn(color="orange", dark, :to="{name: 'static-animation', params: {combinationId: props.item.id, color: props.item.color}}")
+                                    v-icon(dark, left) timeline
+                                    | Static display
+                                v-btn(color="orange", dark, :to="{name: 'dynamic-animation', params: {combinationId: props.item.id}}")
+                                    v-icon(dark, left) cached
+                                    | Animate
+                                v-btn(color="red", dark, @click="removeCombination(props.item.id)")
+                                    v-icon(dark, left) delete
+                                    | Remove
 
                 v-card-actions
                     v-spacer
@@ -26,13 +39,17 @@
 
 <script>
 
-    import { getCombinations } from './../../services/combination-service'
-
+    import { getCombinations, removeRotation } from './../../services/combination-service'
+    import Snackbar from './../../common/components/snackbar.vue'
 
     export default {
+        components: {
+            Snackbar
+        },
         data() {
             return {
-                msg: 'Combinations',
+                text: '',
+                showSnackbar: false,
                 combinations: [],
                 headers: [
                     {
@@ -47,15 +64,34 @@
             }
         },
         created() {
-            getCombinations().then(rsp => {
-                console.log('COMBS ARE HERE', rsp)
-                this.combinations = rsp
-            })
+            this.retrieveCombinations()
+        },
+        mounted() {
+            if (this.$route.params.newCombination !== undefined) {
+                this.text = "New combination successfully added"
+                this.showSnackbar = !this.showSnackbar
+            }
         },
         methods: {
-            edit(x, y) {
-                console.log(x)
-                console.log(y)
+            retrieveCombinations() {
+                getCombinations().then(rsp => {
+                    console.log('COMBS ARE HERE', rsp)
+                    this.combinations = rsp
+                })
+            },
+            testIt() {
+                this.text = "New combination successfully added"
+                this.showSnackbar = !this.showSnackbar
+            },
+            removeCombination(id) {
+                removeRotation(id).then(rsp => {
+                    this.text = "Combination successfully removed"
+                    this.showSnackbar = !this.showSnackbar
+                    this.retrieveCombinations()
+                }).catch(err => {
+                    this.text = "Error occured while removing combination"
+                    this.showSnackbar = !this.showSnackbar
+                })
             }
         }
     }

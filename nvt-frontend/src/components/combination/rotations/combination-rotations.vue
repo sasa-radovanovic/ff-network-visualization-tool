@@ -1,5 +1,6 @@
 <template lang="pug">
     div
+        snackbar(:text="snackBarText", :show="snackBarShow")
         v-form.new-rotation-form(ref="form", v-model="valid")
             v-layout(row, wrap)
                 v-flex(xs12)
@@ -7,12 +8,12 @@
                 v-flex(xs3, md3)
 
                     v-text-field(
-                        label="Origin airport",
-                        v-model="newRotation.departureAirport",
-                        :rules="newRotationRules.airportRules",
-                        required,
-                        disabled
-                        )
+                    label="Origin airport",
+                    v-model="newRotation.departureAirport",
+                    :rules="newRotationRules.airportRules",
+                    required,
+                    disabled
+                    )
                 v-flex(xs3, md3)
 
                     airport-select-combination.mt-2(label="Select airport", action="Select", @return-action="onOriginSelected")
@@ -88,23 +89,29 @@
                 td {{props.item.flightLength}}
 
                 td
-                    v-btn(color="primary", @click="removeAction(props.item.id)") Remove
+                    v-btn(color="red", dark, @click="removeAction(props.item.id)")
+                        v-icon(dark, left) delete
+                        | Remove
 </template>
 
 
 <script>
 
-    import { getRotations } from './../../../services/rotation-service'
+    import {getRotations, removeRotation, addRotation} from './../../../services/rotation-service'
     import AirportSelectCombination from './../airports/airports-select-dialog.vue'
+    import Snackbar from './../../../common/components/snackbar.vue'
 
     export default {
         components: {
-            AirportSelectCombination
+            AirportSelectCombination,
+            Snackbar
         },
-        props: ['combination'],
+        props: ['combinationId'],
         data() {
             return {
                 menu2: false,
+                snackBarText: '',
+                snackBarShow: '',
                 newRotationRules: {
                     airportRules: [
                         (v) => (v !== null && !!v) || 'Airport is required',
@@ -112,7 +119,7 @@
                     ],
                     flightLength: [
                         (v) => (v !== null && !!v) || 'Flight length is required',
-                        (v) => (v!== null && v > 0) || 'Flight length must be > 0'
+                        (v) => (v !== null && v > 0) || 'Flight length must be > 0'
                     ],
                     localDepartureTimeRules: [
                         (v) => (v !== null && !!v) || 'Departure time is required'
@@ -137,6 +144,12 @@
                 },
                 valid: false,
                 headers: [
+                    {
+                        text: 'ID',
+                        align: 'left',
+                        sortable: true,
+                        value: 'ID'
+                    },
                     {
                         text: 'Origin',
                         align: 'left',
@@ -168,19 +181,15 @@
                         value: 'Flight length'
                     }
                 ],
-                combinationId: undefined,
                 rotations: [],
                 newCombination: true,
                 insertIndex: 1
             }
         },
         created() {
-            this.combinationId = this.$route.params.combinationId || this.combination
             if (this.combinationId !== undefined) {
                 this.newCombination = false
-                getRotations(this.combinationId).then(rsp => {
-                    this.rotations = rsp
-                })
+                this.retrieveRotations()
             }
         },
         computed: {
@@ -192,6 +201,32 @@
             }
         },
         methods: {
+            retrieveRotations() {
+                this.rotations = []
+                getRotations(this.combinationId).then(rsp => {
+                    rsp.forEach(r => {
+                        let frequency = ''
+                        for (let d = 1; d <= 7; d++) {
+                            if (r.dayMap[d] === true) {
+                                frequency += d + '/'
+                            }
+                        }
+                        frequency = frequency.substring(0, frequency.length - 1);
+                        this.rotations.push({
+                            'id': r.id,
+                            'origin': r.originIataCode,
+                            'destination': r.destinationIataCode,
+                            'flightLength': r.flightTime,
+                            'departureTime': r.utcDepartureTime,
+                            'frequency': frequency
+                        })
+                    })
+                }).catch(err => {
+                    this.snackBarText = "Error retrieving rotations"
+                    this.snackBarShow = !this.snackBarShow
+                    this.rotations = []
+                })
+            },
             resetNewRotation() {
                 this.newRotation.departureTime = '12:00'
                 this.newRotation.flightLength = 60
@@ -223,7 +258,14 @@
             },
             removeAction(index) {
                 if (!this.newCombination) {
-
+                    removeRotation(index).then(rsp => {
+                        this.snackBarText = "Removed rotation from combination"
+                        this.snackBarShow = !this.snackBarShow
+                        this.retrieveRotations()
+                    }).catch(err => {
+                        this.snackBarText = "Error occured while removing rotation from combination"
+                        this.snackBarShow = !this.snackBarShow
+                    })
                 } else {
                     this.rotations = this.rotations.filter(r => {
                         return r.id !== index
@@ -233,24 +275,40 @@
             },
             addAction() {
                 if (!this.newCombination) {
-
+                    var frequency = '';
+                    for (var i = 1; i <= 7; i++) {
+                        if (this.newRotation.days[i - 1] === true) {
+                            frequency = frequency + i + '/'
+                        }
+                    }
+                    frequency = frequency.substring(0, frequency.length - 1);
+                    addRotation(this.newRotation.departureAirportIata, this.newRotation.arrivalAirportIata, frequency, this.newRotation.departureTime,
+                        this.newRotation.flightLength, this.combinationId).then(rsp => {
+                        this.snackBarText = "Rotation added to Combination"
+                        this.snackBarShow = !this.snackBarShow
+                        this.retrieveRotations()
+                    }).catch(err => {
+                        this.snackBarText = "Error occured while adding rotation from combination"
+                        this.snackBarShow = !this.snackBarShow
+                        this.retrieveRotations()
+                    })
                 } else {
                     var frequency = '';
-                    for(var i=1; i<=7; i++) {
-                        if (this.newRotation.days[i-1] === true) {
+                    for (var i = 1; i <= 7; i++) {
+                        if (this.newRotation.days[i - 1] === true) {
                             frequency = frequency + i + '/'
                         }
                     }
                     frequency = frequency.substring(0, frequency.length - 1);
                     this.rotations.push({
-                        'id' : this.insertIndex,
+                        'id': this.insertIndex,
                         'origin': this.newRotation.departureAirportIata,
-                        'destination' : this.newRotation.arrivalAirportIata,
-                        'departureTime' : this.newRotation.departureTime,
-                        'flightLength' : this.newRotation.flightLength,
-                        'frequency' : frequency
+                        'destination': this.newRotation.arrivalAirportIata,
+                        'departureTime': this.newRotation.departureTime,
+                        'flightLength': this.newRotation.flightLength,
+                        'frequency': frequency
                     })
-                    this.insertIndex ++
+                    this.insertIndex++
                     this.resetNewRotation()
                     this.$refs.form.reset()
                     this.$emit('rotation-change', this.rotations)

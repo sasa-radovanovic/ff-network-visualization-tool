@@ -34,4 +34,17 @@ export function createRotation(name, color, rotations){
 
 }
 
+export function removeRotation(id){
+
+    return httpSpinner.delete(`${combinationApi}` + '?id=' + id)
+        .then(response => {
+            return response.data;
+        })
+        .catch(err => {
+            console.log('Error creating Combination',err)
+            return err
+        })
+
+}
+
 

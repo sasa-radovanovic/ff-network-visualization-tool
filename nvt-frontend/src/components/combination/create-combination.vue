@@ -1,16 +1,6 @@
 <template lang="pug">
     div
-        v-snackbar(:timeout="timeout",
-                :top="y === 'top'",
-                :bottom="y === 'bottom'",
-                :right="x === 'right'",
-                :left="x === 'left'",
-                :multi-line="mode === 'multi-line'",
-                :vertical="mode === 'vertical'",
-                v-model="snackbar")
-            | {{ text }}
-            v-btn(flat, color="pink", @click.native="snackbar = false") Close
-
+        snackbar(:text="toasterText", :show="showSnackbar")
         v-flex.mt-5.mb-5(xs8, offset-xs2)
             v-card
                 v-card-media(src="/static/card-header-3.png", height="200px")
@@ -73,11 +63,13 @@
     import CombinationRotations from './rotations/combination-rotations.vue'
     import NewCombinationOverview from './new-combination-overview.vue'
     import { createRotation } from './../../services/combination-service'
+    import Snackbar from './../../common/components/snackbar.vue'
 
     export default {
         components:{
             CombinationRotations,
-            NewCombinationOverview
+            NewCombinationOverview,
+            Snackbar
         },
         data() {
             return {
@@ -86,18 +78,14 @@
                 name: '',
                 nameRules: [
                     (v) => !!v || 'Name is required',
-                    (v) => v.length <= 15 || 'Name must be less than 15 characters'
+                    (v) => v.length <= 30 || 'Name must be less than 30 characters'
                 ],
                 red: 64,
                 green: 128,
                 blue: 0,
                 e1: 0,
-                snackbar: false,
-                text: '',
-                y: 'top',
-                x: null,
-                mode: '',
-                timeout: 4000
+                toasterText: '',
+                showSnackbar: false
             }
 
         },
@@ -116,13 +104,13 @@
             },
             createCombination() {
                 createRotation(this.name, this.hex, this.rotations).then(rsp => {
-                    this.text = 'Combination successfully created'
-                    this.snackbar = true
-                    this.$router.push("{'name': 'combinations'}")
+                    this.toasterText = 'Combination successfully created'
+                    this.showSnackbar = !this.showSnackbar
+                    this.$router.push({name: 'combinations', params : {newCombination : true}})
                 }).catch(err => {
                     console.log(err)
-                    this.text ='Error creating combination'
-                    this.snackbar = true
+                    this.toasterText ='Error creating combination'
+                    this.showSnackbar = !this.showSnackbar
                 })
             }
         }
