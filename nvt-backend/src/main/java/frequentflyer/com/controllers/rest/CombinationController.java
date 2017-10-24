@@ -30,13 +30,13 @@ public class CombinationController {
 
 
     @RequestMapping(value = "combinations", method = RequestMethod.POST)
-    public void createCombination (@RequestBody CreateCombinationDto createCombinationDto) throws ServiceException {
+    public void createCombination (@RequestBody(required = true) CreateCombinationDto createCombinationDto) throws ServiceException {
         combinationService.createCombination(createCombinationDto.getName(), createCombinationDto.getColor(), createCombinationDto.getRotations());
     }
 
 
     @RequestMapping(value = "combinations", method = RequestMethod.DELETE)
-    public void deleteCombination (@RequestParam String id) throws ServiceException {
+    public void deleteCombination (@RequestParam(required = true) String id) throws ServiceException {
         long combinationId = Long.parseLong(id);
         combinationService.removeCombination(combinationId);
     }

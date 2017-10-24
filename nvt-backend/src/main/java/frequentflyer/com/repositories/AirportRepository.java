@@ -5,10 +5,12 @@ import frequentflyer.com.entities.Combination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by sasaradovanovic on 10/10/17.
  */
+@Repository
 public interface AirportRepository extends CrudRepository<Airport, Long> {
 
     Airport findByIataCode(String iataCode);
@@ -19,5 +21,4 @@ public interface AirportRepository extends CrudRepository<Airport, Long> {
                                                                                                                String iataCode,
                                                                                                                String icaoCode,
                                                                                                                Pageable pageable);
-
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/network-visualization-tool.iml" filepath="$PROJECT_DIR$/network-visualization-tool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nvt-backend/nvt-backend.iml" filepath="$PROJECT_DIR$/nvt-backend/nvt-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nvt-frontend/nvt-frontend.iml" filepath="$PROJECT_DIR$/nvt-frontend/nvt-frontend.iml" />
+    </modules>
+  </component>
+</project>

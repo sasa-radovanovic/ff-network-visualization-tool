@@ -20,5 +20,7 @@
 </script>
 
 <style>
-
+    .firstHeading {
+        font-size: 20px;
+    }
 </style>

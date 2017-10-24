@@ -2,19 +2,24 @@ package frequentflyer.com;
 
 import frequentflyer.com.domain.DomainMapper;
 import frequentflyer.com.domain.RotationDto;
+import frequentflyer.com.entities.AirlineRoute;
 import frequentflyer.com.entities.Airport;
 import frequentflyer.com.entities.Combination;
 import frequentflyer.com.entities.Rotation;
-import frequentflyer.com.repositories.AirportRepository;
-import frequentflyer.com.repositories.CombinationRepository;
-import frequentflyer.com.repositories.RotationRepository;
+import frequentflyer.com.repositories.*;
+import frequentflyer.com.services.AirlineRouteService;
+import frequentflyer.com.services.AirlineService;
 import frequentflyer.com.services.AirportService;
+import frequentflyer.com.services.impl.AirlineServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.io.InputStream;
 
@@ -44,10 +49,38 @@ public class NvtApplication implements CommandLineRunner {
 	@Autowired
 	private AirportRepository airportRepository;
 
+	@Autowired
+	private AirlineRepository airlineRepository;
+
+	@Autowired
+	private AirlineService airlineService;
+
+	@Autowired
+	private AirlineRouteRepository airlineRouteRepository;
+
+	@Autowired
+	private AirlineRouteService airlineRouteService;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(NvtApplication.class, args);
 	}
+
+	/**
+	 *
+	 * Async Task Executor for Async methods
+	 *
+	 * @return {@link TaskExecutor}
+	 */
+	@Bean
+	public TaskExecutor taskExecutor() {
+		final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(2);
+		executor.setMaxPoolSize(10);
+		executor.setQueueCapacity(25);
+		return executor;
+	}
+
 
 	@Override
 	public void run(String... strings) throws Exception {
@@ -56,10 +89,16 @@ public class NvtApplication implements CommandLineRunner {
 
 		InputStream inputStream = new ClassPathResource("/data/airports.csv").getInputStream();
 
+		InputStream airlineInputStream = new ClassPathResource("/data/airlines.csv").getInputStream();
+
+		InputStream airlineRoutesInputStream = new ClassPathResource("/data/airlineRoutes.csv").getInputStream();
 
 		long airportsInDb = airportRepository.count();
 
-		log.info("AIRPORTS IN DB " + airportsInDb);
+		long airlinesInDb = airlineRepository.count();
+
+		long airlineRoutesInDb = airlineRouteRepository.count();
+
 
 		if (airportsInDb == 0) {
 			log.info("--------------------------------");
@@ -67,6 +106,23 @@ public class NvtApplication implements CommandLineRunner {
 			log.info("--------------------------------");
 
 			airportService.loadAirports(inputStream);
+		}
+
+		if (airlinesInDb == 0) {
+			log.info("--------------------------------");
+			log.info("Starting airline processing");
+			log.info("--------------------------------");
+
+			airlineService.loadAirlines(airlineInputStream);
+		}
+
+
+		if (airlineRoutesInDb == 0) {
+			log.info("--------------------------------");
+			log.info("Starting airline route processing");
+			log.info("--------------------------------");
+
+			airlineRouteService.loadAirlineRoutes(airlineRoutesInputStream);
 		}
 
 		Combination combination = combinationRepository.findByCombinationName("MyAirline");

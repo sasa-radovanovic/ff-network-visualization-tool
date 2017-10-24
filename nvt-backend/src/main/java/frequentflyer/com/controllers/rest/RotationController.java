@@ -23,14 +23,14 @@ public class RotationController {
 
     @RequestMapping(value = "rotations", method = RequestMethod.GET)
     @ResponseBody
-    public List<RotationDto> getAllRotationsForCombination(@RequestParam String combinationId) {
+    public List<RotationDto> getAllRotationsForCombination(@RequestParam(required = true) String combinationId) {
         Long id = Long.parseLong(combinationId);
         return rotationService.getAllRotationsForCombination(id);
     }
 
 
     @RequestMapping(value = "rotations", method = RequestMethod.POST)
-    public void createRotation(@RequestBody CreateRotationDto createRotationDto) {
+    public void createRotation(@RequestBody(required = true) CreateRotationDto createRotationDto) {
         rotationService.createNewRotation(createRotationDto.getOrigin(), createRotationDto.getDestination(),
                 createRotationDto.getFrequency(),
                 createRotationDto.getLocalDepartureTime(),
@@ -41,7 +41,7 @@ public class RotationController {
 
 
     @RequestMapping(value = "rotations", method = RequestMethod.DELETE)
-    public void deleteRotation(@RequestParam String rotationId) {
+    public void deleteRotation(@RequestParam(required = true) String rotationId) {
         rotationService.removeRotation(Long.parseLong(rotationId));
     }
 

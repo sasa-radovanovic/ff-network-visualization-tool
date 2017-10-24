@@ -62,7 +62,7 @@
                     disableDoubleClickZoom: false,
                     zoom: 3,
                     center: new google.maps.LatLng(51.5072,0.1275),
-                    styles: mapConfigurationFactory('#ffa500', 52, '#cc00cc', '#cc00cc', 90)
+                    styles: mapConfigurationFactory()
                 };
                 this.mapObject	=	new google.maps.Map(document.getElementById('mapCanvas'), options);
                 this.loadRotationsToMap(this.rotations)
@@ -85,10 +85,12 @@
                         markerOrigin.setMap(this.mapObject)
                         markerOrigin.setMap(this.mapObject)
 
+                        var _color = this.color
+
                         markerOrigin.addListener('click', function() {
                             generateInfoWindow(rot.originIataCode,
                                 rot.originIcaoCode, rot.originName, rot.originCityName, rot.originCountry,
-                                rot.originLongitude, rot.originLatitude).open(this.mapObject, markerOrigin);
+                                rot.originLongitude, rot.originLatitude, _color).open(this.mapObject, markerOrigin);
                         });
                     }
 
@@ -112,7 +114,7 @@
                         markerDestination.addListener('click', function() {
                             generateInfoWindow(rot.destinationIataCode,
                                 rot.destinationIcaoCode, rot.destinationName, rot.destinationCityName, rot.destinationCountry,
-                                rot.destinationLongitude, rot.destinationLatitude).open(this.mapObject, markerDestination);
+                                rot.destinationLongitude, rot.destinationLatitude, _color).open(this.mapObject, markerDestination);
                         });
                     }
 

@@ -21,7 +21,7 @@ public class AirportController {
 
     @RequestMapping(value = "airports", method = RequestMethod.GET)
     @ResponseBody
-    public AirportSearchDto airportPartialSearch(@RequestParam String searchCriteria) {
+    public AirportSearchDto airportPartialSearch(@RequestParam(required = true) String searchCriteria) {
         log.info("Airport search for " + searchCriteria);
         return airportService.partialSearch(searchCriteria);
     }
