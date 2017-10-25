@@ -1,5 +1,6 @@
 package frequentflyer.com.services;
 
+import frequentflyer.com.domain.AirlineDto;
 import frequentflyer.com.domain.AirlineSearchDto;
 import frequentflyer.com.entities.Airline;
 
@@ -17,4 +18,6 @@ public interface AirlineService {
     Airline findAirlineByUniqueCode(String uniqueCode);
 
     AirlineSearchDto partialSearch(String searchCriteria);
+
+    AirlineDto getAirlineData(String uniqueId);
 }

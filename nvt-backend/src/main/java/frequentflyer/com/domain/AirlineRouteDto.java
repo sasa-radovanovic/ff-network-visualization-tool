@@ -40,5 +40,7 @@ public class AirlineRouteDto {
 
     private String aircraftTypes;
 
+    private boolean codeshare;
+
 
 }

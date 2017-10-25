@@ -8,11 +8,15 @@
                 v-btn(icon='')
                     v-icon search
 
-                v-btn(icon)
-                    v-icon local_airport
+                v-tooltip(bottom)
+                    v-btn(icon, slot="activator", :to="{name: 'airlines'}")
+                        v-icon local_airport
+                    span Airlines
 
-                v-btn(icon)
-                    v-icon flight_land
+                v-tooltip(bottom)
+                    v-btn(icon, slot="activator")
+                        v-icon flight_land
+                    span Airports
 </template>
 
 

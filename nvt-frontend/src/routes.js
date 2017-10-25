@@ -5,6 +5,8 @@ import NewCombination from './components/combination/create-combination.vue'
 import EditCombination from './components/combination/edit-combination.vue'
 import StaticAnimation from './components/combination/animations/static-animation.vue'
 import DynamicAnimation from './components/combination/animations/dynamic-animation.vue'
+import AirlineSearch from './components/airlines/airline-search.vue'
+import AirlineNetwork from './components/airlines/airline-network.vue'
 
 Vue.use(VueRouter)
 
@@ -48,6 +50,16 @@ const router = new VueRouter({
             path: '/combinations/dynamic',
             component: DynamicAnimation,
             name: 'dynamic-animation'
+        },
+        {
+            path: '/airlines',
+            component: AirlineSearch,
+            name: 'airlines'
+        },
+        {
+            path: '/airline-network',
+            component: AirlineNetwork,
+            name: 'airline-network'
         },
         {
             path: '*',

@@ -6,7 +6,7 @@
                 span.headline {{ label }}
             v-card-text
                 v-container(grid-list-md)
-                    v-layout(wrap=)
+                    v-layout(wrap)
                         v-flex(xs9)
                             v-text-field(label="Search criteria", v-model="searchCriteria", required, @keyup.enter="performSearch")
                         v-flex(xs3)

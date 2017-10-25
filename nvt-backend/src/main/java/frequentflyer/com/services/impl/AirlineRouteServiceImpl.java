@@ -117,10 +117,18 @@ public class AirlineRouteServiceImpl implements AirlineRouteService {
 
         Airline airline = airlineService.findAirlineByUniqueCode(uniqueId);
 
-        List<AirlineRoute> airlineRoutes = airlineRouteRepository.findAllByAirlineAndCodeshare(airline, codeshares);
+        List<AirlineRoute> airlineRoutes = airlineRouteRepository.findAllByAirlineAndCodeshare(airline, false);
+
+        if (codeshares) {
+            airlineRoutes.addAll(airlineRouteRepository.findAllByAirlineAndCodeshare(airline, true));
+        }
+
+        log.info("FOUND AIRLINES ROUTES " + airlineRoutes.size());
 
         airlineRoutes.forEach(ar -> {
             AirlineRouteDto airlineRouteDto = new AirlineRouteDto();
+
+            airlineRouteDto.setCodeshare(ar.getCodeshare());
             airlineRouteDto.setAircraftTypes(ar.getAirplaneTypes());
             airlineRouteDto.setId(ar.getId());
 

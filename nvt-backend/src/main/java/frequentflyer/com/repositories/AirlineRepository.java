@@ -17,7 +17,7 @@ public interface AirlineRepository extends CrudRepository<Airline, Long> {
 
     Airline findByUniqueId(String uniqueId);
 
-    Page<Airline> findByAirlineNameContainsAndIataCodeContainsAndIcaoCodeContainsAndCountryContains(String airlineName,
+    Page<Airline> findByAirlineNameContainsOrIataCodeContainsOrIcaoCodeContainsOrCountryContains(String airlineName,
                                                                                                                String iata,
                                                                                                                String icao,
                                                                                                                String country,

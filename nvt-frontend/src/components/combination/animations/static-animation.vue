@@ -83,7 +83,6 @@
                         });
                         this.airportsProcessed[rot.originIataCode] = true
                         markerOrigin.setMap(this.mapObject)
-                        markerOrigin.setMap(this.mapObject)
 
                         var _color = this.color
 
@@ -110,6 +109,9 @@
 
                         this.airportsProcessed[rot.destinationIataCode] = true
                         markerDestination.setMap(this.mapObject)
+
+                        var _color = this.color
+
 
                         markerDestination.addListener('click', function() {
                             generateInfoWindow(rot.destinationIataCode,

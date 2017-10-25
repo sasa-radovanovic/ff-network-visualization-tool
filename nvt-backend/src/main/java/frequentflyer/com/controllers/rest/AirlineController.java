@@ -1,5 +1,6 @@
 package frequentflyer.com.controllers.rest;
 
+import frequentflyer.com.domain.AirlineDto;
 import frequentflyer.com.domain.AirlineSearchDto;
 import frequentflyer.com.services.AirlineService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,13 @@ public class AirlineController {
     @ResponseBody
     public AirlineSearchDto partialSearch(@RequestParam(required = true) String searchCriteria) {
         return airlineService.partialSearch(searchCriteria);
+    }
+
+
+    @RequestMapping(value = "airlines/data", method = RequestMethod.GET)
+    @ResponseBody
+    public AirlineDto getAirlineData(@RequestParam(required = true) String uniqueId) {
+        return airlineService.getAirlineData(uniqueId);
     }
 
 }

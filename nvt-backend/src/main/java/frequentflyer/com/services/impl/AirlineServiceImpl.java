@@ -2,25 +2,23 @@ package frequentflyer.com.services.impl;
 
 import frequentflyer.com.domain.AirlineDto;
 import frequentflyer.com.domain.AirlineSearchDto;
+import frequentflyer.com.domain.DomainMapper;
 import frequentflyer.com.entities.Airline;
-import frequentflyer.com.entities.Airport;
 import frequentflyer.com.repositories.AirlineRepository;
 import frequentflyer.com.services.AirlineService;
+import frequentflyer.com.services.exceptions.NvtServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NonUniqueResultException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.function.Function;
 
 /**
@@ -94,10 +92,14 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Override
     public AirlineSearchDto partialSearch(String searchCriteria) {
+
+        log.info(" Search for airlines " + searchCriteria);
         AirlineSearchDto airlineSearchDto = new AirlineSearchDto();
 
-        Page<Airline> airlines = airlineRepository.findByAirlineNameContainsAndIataCodeContainsAndIcaoCodeContainsAndCountryContains(searchCriteria,
+        Page<Airline> airlines = airlineRepository.findByAirlineNameContainsOrIataCodeContainsOrIcaoCodeContainsOrCountryContains(searchCriteria,
                 searchCriteria, searchCriteria, searchCriteria, new PageRequest(0, 50));
+
+        log.info(" Retrieved from DB " + airlines.getTotalElements());
 
         airlineSearchDto.setTotalNum(airlines.getTotalElements());
 
@@ -116,6 +118,15 @@ public class AirlineServiceImpl implements AirlineService {
         airlineSearchDto.setAirlineDtoList(airlineDtoList);
 
         return airlineSearchDto;
+    }
+
+    @Override
+    public AirlineDto getAirlineData(String uniqueId) {
+        Airline airline = airlineRepository.findByUniqueId(uniqueId);
+        if (airline == null) {
+            throw new NvtServiceException("No airline found");
+        }
+        return DomainMapper.airlineToAirlineDto(airline);
     }
 
 }

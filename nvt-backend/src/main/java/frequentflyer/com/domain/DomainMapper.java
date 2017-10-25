@@ -1,5 +1,6 @@
 package frequentflyer.com.domain;
 
+import frequentflyer.com.entities.Airline;
 import frequentflyer.com.entities.Airport;
 import frequentflyer.com.entities.Combination;
 import frequentflyer.com.entities.Rotation;
@@ -97,6 +98,16 @@ public class DomainMapper {
 
 
         return rotationDto;
+    }
+
+
+    public static AirlineDto airlineToAirlineDto(Airline airline) {
+        AirlineDto airlineDto = new AirlineDto();
+        airlineDto.setName(airline.getAirlineName());
+        airlineDto.setIataCode(airline.getIataCode());
+        airlineDto.setIcaoCode(airline.getIcaoCode());
+        airlineDto.setCountry(airline.getCountry());
+        return airlineDto;
     }
 
 

@@ -231,7 +231,7 @@ export function generatePin(color) {
 
 
 export function generateInfoWindow(iata, icao, name, city, country, lat, long, color) {
-    console.log(">>>> " + color)
+
     var contentString = '<div id="content" style="color:'+ color +';" >'+
         '<div id="siteNotice">'+
         '</div>'+
@@ -242,6 +242,15 @@ export function generateInfoWindow(iata, icao, name, city, country, lat, long, c
         '</p>'+
         '</div>'+
         '</div>';
+
+    return new google.maps.InfoWindow({
+        content: contentString
+    });
+}
+
+
+
+export function generateRoutePolyline(contentString) {
 
     return new google.maps.InfoWindow({
         content: contentString
