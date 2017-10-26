@@ -5,15 +5,9 @@
             v-layout(row, wrap)
                 v-flex.mb-3(xs12)
                     v-layout(row)
-                        h5.mt-2 Airline network
+                        h5.mt-3 Airline network
                         v-spacer
-                        v-btn(color="orange", dark)
-                            v-icon(dark, left) flight
-                            | Add airline
-                        v-btn(color="orange", dark)
-                            v-icon(dark, left) add_location
-                            | Add combination
-
+                        add-combination-dialog.mt-2(label="Add combination", action="Select", @selected-combination="onCombinationAdded")
                         add-airline-dialog.mt-2(label="Add airline", action="Select", @selected-airline="onAirlineAdded")
 
                 v-flex.mt-2(xs3, v-for="airline in airlinesInQueue", :key="airline.iata")
@@ -23,7 +17,14 @@
                             p {{airline.name}} ({{airline.iata}}), {{airline.country}}
                         v-card-actions
                             v-btn(flat, :style="{'color': airline.color}") Change color
-                            v-btn(flat, :style="{'color': airline.color}") Remove
+                            v-btn(flat, :style="{'color': airline.color}", @click="removeAirline(airline.iata)", :disabled = "sumAirlines == 1") Remove
+                v-flex.mt-2(xs3, v-for="comb in combinationsInQueue", :key="comb.name")
+                    v-card
+                        v-card-media(:style="{'background-color' : comb.color}", height="80px")
+                        v-card-title(primary-title)
+                            p {{comb.name}}
+                        v-card-actions
+                            v-btn(flat, :style="{'color': comb.color}", @click="removeCombination(comb.id)") Remove
                 v-flex(xs12)
                     v-checkbox(label="Codeshares", v-model="codeshare")
                 v-flex.mt-1(xs12)
@@ -35,13 +36,20 @@
 
 <script>
 
-    import { getAirlineRoutes } from './../../services/airline-service'
-    import { mapConfigurationFactory, generateInfoWindow, generatePin, generateRoutePolyline } from './../../services/map-config-service'
+    import {getAirlineRoutes} from './../../services/airline-service'
+    import {
+        mapConfigurationFactory,
+        generateInfoWindow,
+        generatePin,
+        generateRoutePolyline
+    } from './../../services/map-config-service'
     import AddAirlineDialog from './add-airline-dialog'
+    import AddCombinationDialog from './../combination/add-combination-dialog'
 
     export default {
         components: {
-            AddAirlineDialog
+            AddAirlineDialog,
+            AddCombinationDialog
         },
         data () {
             return {
@@ -54,6 +62,8 @@
                     color: ''
                 },
                 airlinesInQueue: [],
+                combinationsInQueue: [],
+
                 border: 'orange',
                 airlineRoutes: {},
                 codeshare: true,
@@ -62,7 +72,10 @@
                 airportsOnMap: {},
                 bounds: null,
                 airportsProcessed: {},
-                rotationsProcessed: {}
+                rotationsProcessed: {},
+
+                markers: [],
+                polylines: []
             }
         },
         created() {
@@ -76,15 +89,54 @@
                 this.airline.country = this.$route.params.airline.country
                 this.airline.color = this.getRandomColor()
                 this.airlinesInQueue.push(this.airline)
-                this.bounds = new google.maps.LatLngBounds();
             }
         },
         mounted(){
             this.loadMap()
         },
+        watch: {
+          codeshare(val) {
+              console.log('change occured to ' + val)
+              this.airportsOnMap = {}
+              this.routesOnMap = {}
+
+              this.airlinesInQueue.forEach(airline => {
+                  this.retrieveAirlineRoutes(airline.uniqueId, airline.iata, airline.color, true)
+              })
+          }
+        },
         methods: {
+            removeCombination(id) {
+                this.combinationsInQueue = this.combinationsInQueue.filter(c => {
+                    return c.id !== id
+                })
+            },
+            removeAirline(iata) {
+                this.airlinesInQueue = this.airlinesInQueue.filter(a => {
+                    return a.iata !== iata
+                })
+                this.airportsOnMap = {}
+                this.routesOnMap = {}
+
+                this.airlinesInQueue.forEach(airline => {
+                    this.retrieveAirlineRoutes(airline.uniqueId, airline.iata, airline.color, true)
+                })
+            },
+            onCombinationAdded(item) {
+                console.log(item)
+                this.combinationsInQueue.push(item)
+
+            },
             onAirlineAdded(item) {
-                console.log('Added AIRLINE ', item)
+                let newAirline = {}
+                newAirline.uniqueId = item.uniqueId
+                newAirline.name = item.name
+                newAirline.iata = item.iataCode
+                newAirline.icao = item.icaoCode
+                newAirline.country = item.country
+                newAirline.color = this.getRandomColor()
+                this.airlinesInQueue.push(newAirline)
+                this.retrieveAirlineRoutes(newAirline.uniqueId, newAirline.iata, newAirline.color, true)
             },
             loadMap(){
                 var options = {
@@ -100,14 +152,14 @@
                     styles: mapConfigurationFactory()
                 };
                 this.mapObject = new google.maps.Map(document.getElementById('mapCanvas'), options);
-                this.retrieveAirlineRoutes(this.airline.uniqueId, this.airline.iata, this.airline.color)
+                this.retrieveAirlineRoutes(this.airline.uniqueId, this.airline.iata, this.airline.color, true)
             },
-            retrieveAirlineRoutes(uniqueId, iata, color) {
+            retrieveAirlineRoutes(uniqueId, iata, color, initiateRedraw) {
                 getAirlineRoutes(uniqueId, this.codeshare).then(rsp => {
-                    console.log('ROUTES RETRIEVED ' + rsp.length)
-                    this.airlineRoutes[iata] = rsp
                     this.prepareRoutes(rsp, iata, color)
-                    this.drawMap()
+                    if (initiateRedraw) {
+                        this.drawMap()
+                    }
                 }).catch(err => {
 
                 })
@@ -125,8 +177,8 @@
             },
             prepareRoutes(newRoutes, airline, color) {
 
-                console.log('PREPARE ROUTES PLEASEEEEE ' + newRoutes.length)
 
+                var i = 0
 
                 newRoutes.forEach(r => {
 
@@ -144,9 +196,10 @@
                         }
                     } else {
                         if (this.airportsOnMap[r.originIataCode].color !== color) {
-                            this.airportsOnMap[r.originIataCode].color = '#737373'
+                            this.airportsOnMap[r.originIataCode].color = '#808080'
                         }
                     }
+
 
                     if (this.airportsOnMap[r.destinationIataCode] === undefined) {
                         this.airportsOnMap[r.destinationIataCode] = {}
@@ -162,26 +215,70 @@
                         }
                     } else {
                         if (this.airportsOnMap[r.destinationIataCode].color !== color) {
-                            this.airportsOnMap[r.destinationIataCode].color = '#737373'
+                            this.airportsOnMap[r.destinationIataCode].color = '#808080'
                         }
                     }
 
-                    if (this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode] === undefined) {
-                        if (this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode] === undefined) {
-                            this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode] = {}
-                            this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline] = r
-                            this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].color = color
-                            this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].return = false
+                    try {
+
+                        if (this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode] === undefined) {
+                            if (this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode] === undefined) {
+
+                                this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode] = {}
+                                this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline] = r
+                                this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].color = color
+                                this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].return = false
+                            } else {
+
+                                this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode][airline].return = true
+
+                            }
+
                         } else {
-                            this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode][airline].return = true
+                            if (this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline] === undefined) {
+
+                                if (this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode] !== undefined) {
+                                    if (this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode][airline] === undefined) {
+                                        this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline] = r
+                                        this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].color = color
+                                        this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].return = false
+                                    } else {
+                                        this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode][airline].return = true
+                                    }
+                                } else {
+                                    this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline] = r
+                                    this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].color = color
+                                    this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].return = false
+                                }
+
+
+                            }
                         }
+
+
+                    } catch (e) {
+                        console.error(e)
                     }
                 })
+
             },
             drawMap() {
 
+                this.airportsProcessed = {}
 
-                console.log('process')
+                this.bounds = new google.maps.LatLngBounds();
+
+                this.markers.forEach(m => {
+                    m.setMap(null)
+                })
+
+                this.polylines.forEach(p => {
+                    p.setMap(null)
+                })
+
+                this.markers = []
+                this.polylines = []
+
                 let airports = Object.keys(this.airportsOnMap)
                 airports.forEach(key => {
                     let a = this.airportsOnMap[key]
@@ -203,6 +300,8 @@
                                 a.data.icao, a.data.name, a.data.city, a.data.country,
                                 a.data.longitude, a.data.latitude, a.color).open(this.mapObject, airportMarker);
                         });
+
+                        this.markers.push(airportMarker)
                     }
 
                     this.bounds.extend(new google.maps.LatLng(a.data.latitude, a.data.longitude));
@@ -217,7 +316,6 @@
                     airlinesInRoute.forEach(air => {
                         let route = this.routesOnMap[key][air]
 
-                        //console.log(route)
                         var flightPlanCoordinates = [
                             {
                                 lat: route.destinationLatitude,
@@ -260,17 +358,21 @@
                             })
                         }
 
-                        flightPath.setMap(this.mapObject, flightPath)
+                        this.polylines.push(flightPath)
 
-
-
-
-
-
+                        flightPath.setMap(this.mapObject)
                     })
 
                 })
 
+            }
+        },
+        computed: {
+            sumAirlinesCombinations() {
+                return this.airlinesInQueue.length + this.combinationsInQueue.length
+            },
+            sumAirlines () {
+                return this.airlinesInQueue.length
             }
         }
     }
