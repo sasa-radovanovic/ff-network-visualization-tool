@@ -1,6 +1,6 @@
 <template lang="pug">
     v-dialog(v-model="dialog", persistent="", max-width="800px")
-        v-btn(color="orange", dark, slot="activator", @click="loadCombinations")
+        v-btn(color="orange", dark, slot="activator", @click="loadCombinations", :disabled="disableModal")
             v-icon(dark, left) add_location
             | {{ label }}
         v-card
@@ -31,7 +31,7 @@
 
 
     export default {
-        props: ['label', 'action'],
+        props: ['label', 'action', 'disable-modal'],
         data () {
             return {
                 dialog: false,

@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="39f1a4d5-c6e0-4139-a810-c7a34379b661" name="Default" comment="Static visualization of network">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue" afterPath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue" afterPath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-frontend/src/components/combination/add-combination-dialog.vue" afterPath="$PROJECT_DIR$/nvt-frontend/src/components/combination/add-combination-dialog.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/dynamic-animation.vue" afterPath="$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/dynamic-animation.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/nvt-frontend/target/" />
@@ -18,13 +21,37 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="airline-network.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="airline-network.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="15" column="51" lean-forward="true" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
+            <state relative-caret-position="233">
+              <caret line="126" column="26" lean-forward="false" selection-start-line="126" selection-start-column="26" selection-end-line="126" selection-end-column="26" />
               <folding>
-                <element signature="e#1953#2018#0" expanded="true" />
+                <element signature="e#2120#2185#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dynamic-animation.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/dynamic-animation.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="440">
+              <caret line="92" column="45" lean-forward="false" selection-start-line="92" selection-start-column="45" selection-end-line="92" selection-end-column="45" />
+              <folding>
+                <element signature="e#853#966#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="static-animation.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/static-animation.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="588">
+              <caret line="155" column="4" lean-forward="false" selection-start-line="155" selection-start-column="4" selection-end-line="169" selection-end-column="5" />
+              <folding>
+                <element signature="e#275#388#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -33,8 +60,18 @@
       <file leaf-file-name="add-combination-dialog.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/add-combination-dialog.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="43" lean-forward="false" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
+            <state relative-caret-position="150">
+              <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="change-color-modal.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/change-color-modal.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="224">
+              <caret line="66" column="25" lean-forward="true" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -44,7 +81,7 @@
         <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/combinations.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="334">
-              <caret line="86" column="14" lean-forward="true" selection-start-line="85" selection-start-column="12" selection-end-line="86" selection-end-column="14" />
+              <caret line="86" column="14" lean-forward="false" selection-start-line="85" selection-start-column="12" selection-end-line="86" selection-end-column="14" />
               <folding>
                 <element signature="e#1960#2046#0" expanded="true" />
               </folding>
@@ -55,8 +92,8 @@
       <file leaf-file-name="create-combination.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/create-combination.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="47" column="42" lean-forward="false" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
+            <state relative-caret-position="172">
+              <caret line="91" column="8" lean-forward="true" selection-start-line="91" selection-start-column="8" selection-end-line="95" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -75,18 +112,8 @@
       <file leaf-file-name="add-airline-dialog.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="67" column="12" lean-forward="false" selection-start-line="67" selection-start-column="12" selection-end-line="94" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="airline-service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nvt-frontend/src/services/airline-service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="29" lean-forward="false" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="29" />
+            <state relative-caret-position="342">
+              <caret line="93" column="35" lean-forward="true" selection-start-line="86" selection-start-column="16" selection-end-line="93" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -98,31 +125,6 @@
             <state relative-caret-position="435">
               <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="31" selection-end-column="85" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="map-config-service.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nvt-frontend/src/services/map-config-service.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3675">
-              <caret line="245" column="38" lean-forward="false" selection-start-line="245" selection-start-column="15" selection-end-line="245" selection-end-column="38" />
-              <folding>
-                <marker date="1508942343000" expanded="true" signature="6454:6460" ph="..." />
-                <marker date="1508942343000" expanded="true" signature="6454:6472" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="airline-search.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-search.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="48" column="16" lean-forward="false" selection-start-line="48" selection-start-column="16" selection-end-line="57" selection-end-column="17" />
-              <folding>
-                <element signature="e#1825#1889#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -152,6 +154,8 @@
       <find>retrieveAirlineRoutes</find>
       <find>prepareRoutes</find>
       <find>console.log</find>
+      <find>prepareRoutes(</find>
+      <find>removeCom</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -211,9 +215,11 @@
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-search.vue" />
         <option value="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/services/impl/AirlineRouteServiceImpl.java" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/services/map-config-service.js" />
-        <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/combination/add-combination-dialog.vue" />
+        <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue" />
+        <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/change-color-modal.vue" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue" />
+        <option value="$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/dynamic-animation.vue" />
       </list>
     </option>
   </component>
@@ -348,6 +354,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="combination" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="network-visualization-tool" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ff-nvt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nvt-frontend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="combination" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="animations" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -881,7 +917,7 @@
       <workItem from="1508779739938" duration="1378000" />
       <workItem from="1508827560282" duration="11881000" />
       <workItem from="1508911145152" duration="20515000" />
-      <workItem from="1509001721601" duration="9560000" />
+      <workItem from="1509001721601" duration="14476000" />
     </task>
     <task id="LOCAL-00001" summary="Build system changes">
       <created>1508691916550</created>
@@ -901,7 +937,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59981000" />
+    <option name="totallyTimeSpent" value="64897000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="955" extended-state="6" />
@@ -923,12 +959,12 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32908458" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32908458" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25274727" sideWeight="0.25561312" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25274727" sideWeight="0.25730994" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40556198" sideWeight="0.495116" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25274727" sideWeight="0.74438685" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40556198" sideWeight="0.495116" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25274727" sideWeight="0.7426901" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -956,20 +992,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/new-combination-overview.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="60" lean-forward="false" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/domain/CreateRotationDto.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="20" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nvt-frontend/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1002,6 +1024,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="28" lean-forward="false" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1030,6 +1053,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1217,14 +1241,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/static-animation.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/controllers/rest/AirlineRouteController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1278,16 +1294,8 @@
         <state relative-caret-position="705">
           <caret line="48" column="16" lean-forward="false" selection-start-line="48" selection-start-column="16" selection-end-line="57" selection-end-column="17" />
           <folding>
-            <element signature="e#1825#1889#0" expanded="true" />
+            <element signature="e#1825#1889#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/create-combination.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="42" lean-forward="false" selection-start-line="47" selection-start-column="42" selection-end-line="47" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1310,35 +1318,71 @@
     <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/combinations.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
-          <caret line="86" column="14" lean-forward="true" selection-start-line="85" selection-start-column="12" selection-end-line="86" selection-end-column="14" />
+          <caret line="86" column="14" lean-forward="false" selection-start-line="85" selection-start-column="12" selection-end-line="86" selection-end-column="14" />
           <folding>
             <element signature="e#1960#2046#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue">
+    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/add-combination-dialog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="67" column="12" lean-forward="false" selection-start-line="67" selection-start-column="12" selection-end-line="94" selection-end-column="13" />
+        <state relative-caret-position="150">
+          <caret line="33" column="43" lean-forward="false" selection-start-line="33" selection-start-column="43" selection-end-line="33" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/add-combination-dialog.vue">
+    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="43" lean-forward="false" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
+        <state relative-caret-position="342">
+          <caret line="93" column="35" lean-forward="true" selection-start-line="86" selection-start-column="16" selection-end-line="93" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/create-combination.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="91" column="8" lean-forward="true" selection-start-line="91" selection-start-column="8" selection-end-line="95" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/change-color-modal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="66" column="25" lean-forward="true" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="15" column="51" lean-forward="true" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
+        <state relative-caret-position="233">
+          <caret line="126" column="26" lean-forward="false" selection-start-line="126" selection-start-column="26" selection-end-line="126" selection-end-column="26" />
           <folding>
-            <element signature="e#1953#2018#0" expanded="true" />
+            <element signature="e#2120#2185#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/dynamic-animation.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="92" column="45" lean-forward="false" selection-start-line="92" selection-start-column="45" selection-end-line="92" selection-end-column="45" />
+          <folding>
+            <element signature="e#853#966#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/static-animation.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="155" column="4" lean-forward="false" selection-start-line="155" selection-start-column="4" selection-end-line="169" selection-end-column="5" />
+          <folding>
+            <element signature="e#275#388#0" expanded="true" />
           </folding>
         </state>
       </provider>

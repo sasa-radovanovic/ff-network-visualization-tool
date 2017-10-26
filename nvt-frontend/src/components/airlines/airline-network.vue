@@ -7,8 +7,8 @@
                     v-layout(row)
                         h5.mt-3 Airline network
                         v-spacer
-                        add-combination-dialog.mt-2(label="Add combination", action="Select", @selected-combination="onCombinationAdded")
-                        add-airline-dialog.mt-2(label="Add airline", action="Select", @selected-airline="onAirlineAdded")
+                        add-combination-dialog.mt-2(label="Add combination", action="Select", @selected-combination="onCombinationAdded", :disable-modal="sumAirlinesCombinations === 4")
+                        add-airline-dialog.mt-2(label="Add airline", action="Select", @selected-airline="onAirlineAdded", :disable-modal="sumAirlinesCombinations === 4")
 
                 v-flex.mt-2(xs3, v-for="airline in airlinesInQueue", :key="airline.iata")
                     v-card
@@ -16,7 +16,7 @@
                         v-card-title(primary-title)
                             p {{airline.name}} ({{airline.iata}}), {{airline.country}}
                         v-card-actions
-                            v-btn(flat, :style="{'color': airline.color}") Change color
+                            change-color-dialog(:current="airline.color", :name="airline.name", :iata="airline.iata", @selected-color="changeAirlineColor")
                             v-btn(flat, :style="{'color': airline.color}", @click="removeAirline(airline.iata)", :disabled = "sumAirlines == 1") Remove
                 v-flex.mt-2(xs3, v-for="comb in combinationsInQueue", :key="comb.name")
                     v-card
@@ -24,7 +24,7 @@
                         v-card-title(primary-title)
                             p {{comb.name}}
                         v-card-actions
-                            v-btn(flat, :style="{'color': comb.color}", @click="removeCombination(comb.id)") Remove
+                            v-btn(flat, :style="{'color': comb.color}", @click="onCombinationRemoved(comb.id)") Remove
                 v-flex(xs12)
                     v-checkbox(label="Codeshares", v-model="codeshare")
                 v-flex.mt-1(xs12)
@@ -45,11 +45,15 @@
     } from './../../services/map-config-service'
     import AddAirlineDialog from './add-airline-dialog'
     import AddCombinationDialog from './../combination/add-combination-dialog'
+    import ChangeColorDialog from './change-color-modal'
+    import { getRotations } from './../../services/rotation-service'
+
 
     export default {
         components: {
             AddAirlineDialog,
-            AddCombinationDialog
+            AddCombinationDialog,
+            ChangeColorDialog
         },
         data () {
             return {
@@ -106,9 +110,22 @@
           }
         },
         methods: {
-            removeCombination(id) {
-                this.combinationsInQueue = this.combinationsInQueue.filter(c => {
-                    return c.id !== id
+            changeAirlineColor(data) {
+                this.airlinesInQueue.filter(airline => {
+                    if (airline.iata === data.iata &&
+                            airline.name === data.name) {
+                        airline.color = data.color
+                        this.airportsOnMap = {}
+                        this.routesOnMap = {}
+
+                        this.combinationsInQueue.forEach(comb => {
+                            this.prepareCombinationData(comb.id, comb.name, comb.color)
+                        })
+
+                        this.airlinesInQueue.forEach(airline => {
+                            this.retrieveAirlineRoutes(airline.uniqueId, airline.iata, airline.color, true)
+                        })
+                    }
                 })
             },
             removeAirline(iata) {
@@ -118,13 +135,42 @@
                 this.airportsOnMap = {}
                 this.routesOnMap = {}
 
+                this.combinationsInQueue.forEach(comb => {
+                    this.prepareCombinationData(comb.id, comb.name, comb.color)
+                })
+
                 this.airlinesInQueue.forEach(airline => {
                     this.retrieveAirlineRoutes(airline.uniqueId, airline.iata, airline.color, true)
                 })
             },
+            prepareCombinationData(id, name, color) {
+                getRotations(id).then(rsp => {
+                    this.prepareRoutes(rsp, name, color, true)
+                    this.drawMap()
+                }).catch(err => {
+
+                })
+            },
             onCombinationAdded(item) {
-                console.log(item)
                 this.combinationsInQueue.push(item)
+                this.prepareCombinationData(item.id, item.name, item.color)
+            },
+            onCombinationRemoved(id) {
+
+                this.airportsOnMap = {}
+                this.routesOnMap = {}
+
+                this.combinationsInQueue = this.combinationsInQueue.filter(c => {
+                    return c.id !== id
+                })
+
+                this.combinationsInQueue.forEach(comb => {
+                    this.prepareCombinationData(comb.id, comb.name, comb.color)
+                })
+
+                this.airlinesInQueue.forEach(airline => {
+                    this.retrieveAirlineRoutes(airline.uniqueId, airline.iata, airline.color, true)
+                })
 
             },
             onAirlineAdded(item) {
@@ -156,7 +202,7 @@
             },
             retrieveAirlineRoutes(uniqueId, iata, color, initiateRedraw) {
                 getAirlineRoutes(uniqueId, this.codeshare).then(rsp => {
-                    this.prepareRoutes(rsp, iata, color)
+                    this.prepareRoutes(rsp, iata, color, false)
                     if (initiateRedraw) {
                         this.drawMap()
                     }
@@ -175,7 +221,7 @@
                 }
                 return color;
             },
-            prepareRoutes(newRoutes, airline, color) {
+            prepareRoutes(newRoutes, airline, color, isCombination) {
 
 
                 var i = 0
@@ -228,8 +274,10 @@
                                 this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline] = r
                                 this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].color = color
                                 this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].return = false
+                                if (isCombination) {
+                                    this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].codeshare = false
+                                }
                             } else {
-
                                 this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode][airline].return = true
 
                             }
@@ -242,6 +290,9 @@
                                         this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline] = r
                                         this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].color = color
                                         this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].return = false
+                                        if (isCombination) {
+                                            this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].codeshare = false
+                                        }
                                     } else {
                                         this.routesOnMap[r.destinationIataCode + '/' + r.originIataCode][airline].return = true
                                     }
@@ -249,6 +300,9 @@
                                     this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline] = r
                                     this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].color = color
                                     this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].return = false
+                                    if (isCombination) {
+                                        this.routesOnMap[r.originIataCode + '/' + r.destinationIataCode][airline].codeshare = false
+                                    }
                                 }
 
 
@@ -335,6 +389,9 @@
                         }
 
                         let flightPath
+
+                        console.log(route)
+
                         if (route.codeshare === false) {
                             flightPath = new google.maps.Polyline({
                                 path: flightPlanCoordinates,
