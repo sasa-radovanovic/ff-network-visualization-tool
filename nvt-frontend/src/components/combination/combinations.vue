@@ -23,7 +23,7 @@
                                 v-btn(color="orange", dark, :to="{name: 'static-animation', params: {combinationId: props.item.id, color: props.item.color}}")
                                     v-icon(dark, left) timeline
                                     | Static display
-                                v-btn(color="orange", dark, :to="{name: 'dynamic-animation', params: {combinationId: props.item.id}}")
+                                v-btn(color="orange", dark, :to="{name: 'dynamic-animation', params: {combinationId: props.item.id, color: props.item.color, name: props.item.name}}")
                                     v-icon(dark, left) cached
                                     | Animate
                                 v-btn(color="red", dark, @click="removeCombination(props.item.id)")

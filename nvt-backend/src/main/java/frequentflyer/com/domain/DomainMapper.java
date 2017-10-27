@@ -65,13 +65,24 @@ public class DomainMapper {
 
         long tzDiff = origin.getTimezone().getOffset(new Date().getTime());
 
-        LocalTime utcStandardized = lt.plusSeconds(tzDiff / 1000);
+        log.info("TZ difference " + (tzDiff/1000));
+
+        LocalTime utcStandardized;
+
+        if (tzDiff > 0) {
+            utcStandardized = lt.minusSeconds(tzDiff / 1000);
+        } else if (tzDiff < 0) {
+            utcStandardized = lt.plusSeconds(Math.abs(tzDiff) / 1000);
+        } else {
+            utcStandardized = lt;
+        }
+
 
         log.info("UTC time " + utcStandardized);
 
 
         if (tzDiff > 0) {
-            if (utcStandardized.getHour() < lt.getHour()) {
+            if (utcStandardized.getHour() > lt.getHour()) {
                 // readapt days
                 log.info("Timezone diff was > 0. Adapting frequencies to utc... ");
                 rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), -1));
@@ -79,7 +90,7 @@ public class DomainMapper {
                 rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), 0));
             }
         } else if (tzDiff < 0) {
-            if (utcStandardized.getHour() > lt.getHour()) {
+            if (utcStandardized.getHour() < lt.getHour()) {
                 // readapt days
                 log.info("Timezone diff was < 0. Adapting frequencies to utc... ");
                 rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), 1));
@@ -90,7 +101,11 @@ public class DomainMapper {
             rotationDto.setUtcDayMap(formDayMap(rotation.getFrequency(), 0));
         }
 
+
         rotationDto.setDayMap(formDayMap(rotation.getFrequency(), 0));
+
+        log.info("UTC DAY MAP {}", rotationDto.getUtcDayMap());
+        log.info("DAY MAP {}", rotationDto.getDayMap());
 
         rotationDto.setUtcDepartureTime(utcStandardized.format(dtf));
         rotationDto.setFlightTime(rotation.getFlightLength());

@@ -139,6 +139,7 @@ public class NvtApplication implements CommandLineRunner {
 			Airport JFK = airportRepository.findByIataCode("JFK");
 			Airport GIG = airportRepository.findByIataCode("GIG");
 			Airport BEG = airportRepository.findByIataCode("BEG");
+			Airport LUX = airportRepository.findByIataCode("LUX");
 
 			Rotation rotation1 = new Rotation();
 			rotation1.setCombination(combination);
@@ -155,7 +156,7 @@ public class NvtApplication implements CommandLineRunner {
 			rotation2.setDestination(NRT);
 			rotation2.setFlightLength(600);
 			rotation2.setFrequency("1/4/5/6");
-			rotation2.setLocalDepartureTime("22:30");
+			rotation2.setLocalDepartureTime("01:30");
 			rotation2 = rotationRepository.save(rotation2);
 
 
@@ -167,6 +168,26 @@ public class NvtApplication implements CommandLineRunner {
 			rotation3.setFrequency("1/2/3/4/5/6/7");
 			rotation3.setLocalDepartureTime("16:15");
 			rotation3 = rotationRepository.save(rotation3);
+
+
+			Rotation rotation4 = new Rotation();
+			rotation4.setCombination(combination);
+			rotation4.setOrigin(AMS);
+			rotation4.setDestination(BEG);
+			rotation4.setFlightLength(120);
+			rotation4.setFrequency("1/2/3/4/5/6/7");
+			rotation4.setLocalDepartureTime("02:15");
+			rotation4 = rotationRepository.save(rotation4);
+
+
+			Rotation rotation5 = new Rotation();
+			rotation5.setCombination(combination);
+			rotation5.setOrigin(AMS);
+			rotation5.setDestination(LUX);
+			rotation5.setFlightLength(55);
+			rotation5.setFrequency("1/2/3/4/5/6/7");
+			rotation5.setLocalDepartureTime("02:25");
+			rotation5 = rotationRepository.save(rotation5);
 		}
 
 
