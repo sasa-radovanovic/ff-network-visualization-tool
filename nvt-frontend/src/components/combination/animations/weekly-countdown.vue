@@ -2,7 +2,7 @@
     v-layout(row, wrap)
         v-flex(xs6)
             v-alert(color="info", icon="info", value="true")
-                span {{formattedDay}} {{formattedHour}}:{{formattedMinute}}
+                span {{formattedDay}} UTC time: {{formattedHour}}:{{formattedMinute}}
         v-flex.pl-1(xs6)
             v-alert(color="info", icon="info", value="true")
                 span Speed {{speedRatio}}x

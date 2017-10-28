@@ -5,15 +5,41 @@
             h5 Dynamic network visualization
 
             v-card
-                v-card-title Settings
                 v-card-text
                     v-flex(xs12)
-                        v-slider(track-color="color", v-model="speedRatio", :disabled="animationStarted", thumb-label, step="2", snap, max="480", min="1", label="Animation speed")
+                        v-slider(track-color="color", v-model="speedRatio", :disabled="animationStatus === 'STARTED'", thumb-label, step="2", snap, max="480", min="1", label="Animation speed")
+
+                    v-layout(row, wrap)
+                        v-flex(md5)
+                            v-select(
+                            v-bind:items="days",
+                            v-model="startingDay",
+                            label="Select starting day",
+                            single-line,
+                            :disabled="animationStatus !== 'STOPPED'",
+                            bottom)
+
+                        v-flex(md5, offset-md1)
+                            v-menu(lazy,
+                            :close-on-content-click="false",
+                            v-model="menu2",
+                            transition="scale-transition",
+                            offset-y,
+                            full-width,
+                            :nudge-right="40",
+                            :disabled="animationStatus !== 'STOPPED'",
+                            max-width="290px",
+                            min-width="290px")
+                                v-text-field(slot="activator",
+                                label="Select starting time",
+                                v-model="startingTime",
+                                readonly)
+                                v-time-picker(v-model="startingTime", autosave, format="24hr")
                 v-card-actions
                     v-spacer
-                    v-btn(color="orange", dark, @click="animate", v-if="!animationStarted") Start animation
-                    v-btn(color="orange", dark, @click="stop", v-if="animationStarted") Stop animation
-                    v-btn(color="orange", dark, @click="pause", v-if="animationStarted") Pause animation
+                    v-btn(color="orange", dark, @click="stop", v-if="animationStatus !== 'STOPPED'") Reset animation
+                    v-btn(color="orange", dark, @click="animate", v-if="animationStatus !== 'STARTED'") Start animation
+                    v-btn(color="orange", dark, @click="pause", v-if="animationStatus === 'STARTED'") Pause animation
 
             v-card
                 v-card-text
@@ -23,7 +49,7 @@
                     div(slot="header") Flight status
                     v-card
                         v-card-text.grey.lighten-3
-                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            dynamic-stats(:rotations="processedRotations")
 
             //v-card
                 v-card-text
@@ -41,14 +67,28 @@
     import { getRotations } from './../../../services/rotation-service'
     import Snackbar from './../../../common/components/snackbar.vue'
     import WeeklyCountdown from './weekly-countdown'
+    import DynamicStats from './dynamic-animation-stats'
 
     export default {
         components: {
             Snackbar,
-            WeeklyCountdown
+            WeeklyCountdown,
+            DynamicStats
         },
         data () {
             return {
+                menu2: false,
+                startingTime: '00:00',
+                startingDay: 0,
+                days: [
+                    { text: 'Monday', value: 0 },
+                    { text: 'Tuesday', value: 1 },
+                    { text: 'Wednesday', value: 2 },
+                    { text: 'Thursday', value: 3 },
+                    { text: 'Friday', value: 4 },
+                    { text: 'Saturday', value: 5 },
+                    { text: 'Sunday', value: 6 }
+                ],
                 name: '',
                 color: '',
                 snackBarText: '',
@@ -57,14 +97,12 @@
                 rotations: [],
                 rotationMarkers: [],
                 airportsProcessed: {},
-                color: '',
-                animationStarted: false,
+                animationStatus: 'STOPPED',
                 speedRatio: 240,
                 tickedId: null,
                 minutesGone: 0,
                 processedRotations: [],
-                pathsOnMap: {},
-                airportsProcessed: {}
+                pathsOnMap: {}
             }
         },
         created() {
@@ -84,8 +122,19 @@
             }
         },
         methods: {
-            preProcessRotations() {
+            preProcessRotations(skipAirports) {
                 this.processedRotations = []
+
+                let _startingMinutes = this.startingTime.split(":")
+                let startingMinutes = (Number(_startingMinutes[0]) * 60) + Number(_startingMinutes[1])
+
+                let ids = Object.keys(this.pathsOnMap)
+                ids.forEach(id => {
+                    this.pathsOnMap[id].setMap(null)
+                })
+
+                this.pathsOnMap = {}
+
                 this.rotations.forEach(r => {
                     let _tComps = r.utcDepartureTime.split(":")
                     let departureMinutesFromMidnight = (Number(_tComps[0]) * 60) + Number(_tComps[1])
@@ -104,21 +153,46 @@
                         'flyingMins' : 0
                     }
 
+                    let previous
+                    if (this.day === 0) {
+                        previous = 6
+                    } else {
+                        previous = this.day
+                    }
 
-                    if (r.utcDayMap[7] === true) {
+                    console.log('check previous ' + previous)
+                    if (_preparedRotation[previous] === true) {
 
                         let timeUntilMidnight = 24 * 60 - departureMinutesFromMidnight
-                        if (timeUntilMidnight < r.flightTime) {
+                        if ((timeUntilMidnight +  startingMinutes) < r.flightTime) {
                             _preparedRotation.flying = true
-                            _preparedRotation.flyingMins = timeUntilMidnight
-                            this.setIcon(_preparedRotation, true, (timeUntilMidnight / _preparedRotation.flightTime) * 100)
+                            _preparedRotation.flyingMins = (timeUntilMidnight + startingMinutes)
+                            this.setIcon(_preparedRotation, true, (_preparedRotation.flyingMins / _preparedRotation.flightTime) * 100)
                         }
 
                     }
 
+                    console.log('COMPARING ' + this.day + ' with value ' + _preparedRotation[this.day])
+
+                    if (_preparedRotation[this.day] === true) {
+                        //let depTime = Number(this.day) * 60 * 24 + _preparedRotation.departureMinutes
+
+                        console.log('Starting animation')
+
+                        if (startingMinutes > _preparedRotation.departureMinutes && startingMinutes < (_preparedRotation.departureMinutes + _preparedRotation.flightTime)) {
+                            _preparedRotation.flying = true
+                            _preparedRotation.flyingMins = (startingMinutes - _preparedRotation.departureMinutes)
+                            console.log('set icon to ', _preparedRotation)
+                            this.setIcon(_preparedRotation, true, (_preparedRotation.flyingMins / _preparedRotation.flightTime) * 100)
+                        }
+                    }
+
                     this.processedRotations.push(_preparedRotation)
                 })
-                this.drawAirports()
+
+                if (skipAirports !== true) {
+                    this.drawAirports()
+                }
             },
             loadMap() {
                 var options = {
@@ -160,7 +234,7 @@
             },
             animate() {
                 // 10080 minutes in a week
-                this.animationStarted = true
+                this.animationStatus = 'STARTED'
                 let milisInMinute = 1000 * 60
 
 
@@ -180,16 +254,17 @@
                 }, milisInMinute / this.speedRatio)
             },
             stop() {
-                this.minutesGone = 0
+                this.recalculatingMinutesGone(this.startingDay, this.startingTime)
                 clearInterval(this.tickerId)
-                this.animationStarted = false
-                this.preProcessRotations()
+                this.animationStatus = 'STOPPED'
+                this.preProcessRotations(false)
             },
             pause() {
                 clearInterval(this.tickerId)
-                this.animationStarted = false
+                this.animationStatus = 'PAUSED'
             },
             drawAirports() {
+
                 this.processedRotations.forEach(pr => {
                     if (this.airportsProcessed[pr.data.originIataCode] === undefined) {
                         var markerOrigin = new google.maps.Marker({
@@ -280,6 +355,14 @@
             removeIcon(id) {
                 this.pathsOnMap[id].setMap(null)
                 this.pathsOnMap[id] = undefined
+            },
+            recalculatingMinutesGone(day, time) {
+                console.log('recalc MG ' + day + " " + time)
+                let additionalMinutes = time.split(":")
+                console.log(Number(additionalMinutes[0]) + ' and ' + Number(additionalMinutes[1]))
+                this.minutesGone = day * 24 * 60 + (Number(additionalMinutes[0]) * 60) + Number(additionalMinutes[1])
+                console.log(this.minutesGone)
+                this.preProcessRotations(true)
             }
         },
         computed: {
@@ -295,6 +378,16 @@
         },
         destroy() {
             this.stop()
+        },
+        watch: {
+            startingDay(val) {
+                console.log('watcher ', this.startingDay, this.startingTime)
+                this.recalculatingMinutesGone(this.startingDay, this.startingTime)
+            },
+            startingTime(val) {
+                console.log('watcher ', this.startingDay, this.startingTime)
+                this.recalculatingMinutesGone(this.startingDay, this.startingTime)
+            }
         }
     }
 </script>
