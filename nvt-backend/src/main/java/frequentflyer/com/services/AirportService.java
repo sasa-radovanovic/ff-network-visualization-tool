@@ -1,5 +1,6 @@
 package frequentflyer.com.services;
 
+import frequentflyer.com.domain.AirportDetailed;
 import frequentflyer.com.domain.AirportSearchDto;
 import frequentflyer.com.entities.Airport;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,5 +18,7 @@ public interface AirportService {
     Airport findByAirportCode(String code);
 
     AirportSearchDto partialSearch(String searchCriteria);
+
+    AirportDetailed airportData(String iataCode);
 
 }

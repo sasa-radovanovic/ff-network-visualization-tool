@@ -15,7 +15,6 @@
                             v-bind:items="days",
                             v-model="startingDay",
                             label="Select starting day",
-                            single-line,
                             :disabled="animationStatus !== 'STOPPED'",
                             bottom)
 

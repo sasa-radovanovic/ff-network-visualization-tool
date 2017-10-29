@@ -14,7 +14,7 @@
                     span Airlines
 
                 v-tooltip(bottom)
-                    v-btn(icon, slot="activator")
+                    v-btn(icon, slot="activator", :to="{name: 'airport-data'}")
                         v-icon flight_land
                     span Airports
 </template>

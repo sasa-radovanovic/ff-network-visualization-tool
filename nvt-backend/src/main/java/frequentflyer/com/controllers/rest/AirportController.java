@@ -1,5 +1,6 @@
 package frequentflyer.com.controllers.rest;
 
+import frequentflyer.com.domain.AirportDetailed;
 import frequentflyer.com.domain.AirportSearchDto;
 import frequentflyer.com.services.AirportService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,14 @@ public class AirportController {
     public AirportSearchDto airportPartialSearch(@RequestParam(required = true) String searchCriteria) {
         log.info("Airport search for " + searchCriteria);
         return airportService.partialSearch(searchCriteria);
+    }
+
+
+    @RequestMapping(value = "airports/stats", method = RequestMethod.GET)
+    @ResponseBody
+    public AirportDetailed airportData(@RequestParam(required = true) String iataCode) {
+        log.info("Airport data for " + iataCode);
+        return airportService.airportData(iataCode);
     }
 
 }

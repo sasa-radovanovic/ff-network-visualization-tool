@@ -154,4 +154,9 @@ public class AirlineRouteServiceImpl implements AirlineRouteService {
         return airlineRouteDtoList;
     }
 
+    @Override
+    public List<AirlineRoute> getRoutesFromAirport(Airport airport) {
+        return airlineRouteRepository.findAllByOriginOrDestinationAndCodeshare(airport, airport, false);
+    }
+
 }

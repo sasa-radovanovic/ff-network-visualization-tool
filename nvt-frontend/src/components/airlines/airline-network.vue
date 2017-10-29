@@ -224,8 +224,6 @@
             prepareRoutes(newRoutes, airline, color, isCombination) {
 
 
-                var i = 0
-
                 newRoutes.forEach(r => {
 
                     if (this.airportsOnMap[r.originIataCode] === undefined) {

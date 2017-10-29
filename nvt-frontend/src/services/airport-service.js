@@ -13,3 +13,15 @@ export function partialSearch(criteria){
         })
 
 }
+
+export function airportDetails(iataCode){
+    return httpSpinner.get(`${airportsApi}` + '/stats?iataCode=' + iataCode)
+        .then(response => {
+            return response.data;
+        })
+        .catch(err => {
+            console.log('Error retrieving Airport Data',err)
+            return err
+        })
+
+}

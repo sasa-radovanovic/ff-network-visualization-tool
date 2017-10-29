@@ -7,6 +7,7 @@ import StaticAnimation from './components/combination/animations/static-animatio
 import DynamicAnimation from './components/combination/animations/dynamic-animation.vue'
 import AirlineSearch from './components/airlines/airline-search.vue'
 import AirlineNetwork from './components/airlines/airline-network.vue'
+import AirportSearch from './components/airports/airport-search'
 
 Vue.use(VueRouter)
 
@@ -60,6 +61,11 @@ const router = new VueRouter({
             path: '/airline-network',
             component: AirlineNetwork,
             name: 'airline-network'
+        },
+        {
+            path: '/airport-data',
+            component: AirportSearch,
+            name: 'airport-data'
         },
         {
             path: '*',

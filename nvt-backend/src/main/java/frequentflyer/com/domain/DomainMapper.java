@@ -122,6 +122,7 @@ public class DomainMapper {
         airlineDto.setIataCode(airline.getIataCode());
         airlineDto.setIcaoCode(airline.getIcaoCode());
         airlineDto.setCountry(airline.getCountry());
+        airlineDto.setUniqueId(airline.getUniqueId());
         return airlineDto;
     }
 
