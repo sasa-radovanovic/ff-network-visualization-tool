@@ -8,6 +8,7 @@ import DynamicAnimation from './components/combination/animations/dynamic-animat
 import AirlineSearch from './components/airlines/airline-search.vue'
 import AirlineNetwork from './components/airlines/airline-network.vue'
 import AirportSearch from './components/airports/airport-search'
+import AirportComparison from './components/airports/airport-comparison'
 
 Vue.use(VueRouter)
 
@@ -66,6 +67,11 @@ const router = new VueRouter({
             path: '/airport-data',
             component: AirportSearch,
             name: 'airport-data'
+        },
+        {
+            path: '/airport-comparison',
+            component: AirportComparison,
+            name: 'airport-comparison'
         },
         {
             path: '*',

@@ -142,7 +142,6 @@ public class AirportServiceImpl implements AirportService {
 
             Optional<AirlineDto> existing = airlinesOperating.stream().filter(airlineDto -> {
                 if (airlineDto != null && route.getAirline() != null) {
-                    log.info("COMPARE " + airlineDto.getIataCode() + " with " + route.getAirline().getIataCode());
                     return airlineDto.getUniqueId().equalsIgnoreCase(route.getAirline().getUniqueId());
                 } else {
                     return false;

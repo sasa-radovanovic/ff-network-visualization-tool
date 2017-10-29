@@ -1,29 +1,29 @@
 <template lang="pug">
     div
         snackbar(:text="snackBarText", :show="snackBarShow")
-        v-flex.mt-5(xs8, offset-xs2)
-            v-card.mb-5
-                v-card-media(src="/static/card-header-5.png", height="200px")
-                v-card-title(primary-title)
-                    v-layout(row, wrap)
-                        v-flex(xs12)
-                            h5 Airport data
-                                airport-select-dialog.airport-selection(label="Select airport", action="Select", @return-action="onAirportSelected")
-                            p.ml-1(v-if="basicData.name !== undefined") {{basicData.name}} [{{basicData.iataCode}}], {{basicData.city}}, {{basicData.country}}
-                v-card-text
-                    #mapCanvas.static-map-holder(v-if="basicData.iataCode !== undefined")
-                        p
-                    v-expansion-panel.mt-2.elevation-5(v-if="detailedData.operatingCarriers !== undefined")
-                        v-expansion-panel-content
-                            div(slot="header") Operating carriers {{detailedData.operatingCarriers.length}}
-                            v-card
-                                v-card-text.grey.lighten-3
-                                    operating-carriers(:carriers="detailedData.operatingCarriers")
+        v-container.mt-3.mb-5(grid-list-md)
+            v-layout(row, wrap)
+                v-flex.mt-5(xs10, offset-xs1)
+                    v-card.mb-5
+                        v-card-media(src="/static/card-header-5.png", height="200px")
+                        v-card-title(primary-title)
+                            v-layout(row, wrap)
+                                v-flex(xs12)
+                                    h5 Airport data
+                                        airport-select-dialog.airport-selection(label="Select airport", action="Select", @return-action="onAirportSelected")
+                                    p.ml-1(v-if="basicData.name !== undefined") {{basicData.name}} [{{basicData.iataCode}}], {{basicData.city}}, {{basicData.country}}
+                        v-card-text(v-if="basicData.iataCode !== undefined")
+                            #mapCanvas.static-map-holder
+                                p
 
-                v-card-actions(v-if="basicData.name !== undefined")
-                    v-spacer
-                    v-btn(color="orange", dark) Compare with other airport
-                    v-btn(color="orange", dark) Compare with airports in vinicity
+                            p(v-if="detailedData.operatingCarriers !== undefined") Operating carriers from {{basicData.iataCode}}: {{detailedData.operatingCarriers.length}}
+                            operating-carriers(v-if="detailedData.operatingCarriers !== undefined", :carriers="detailedData.operatingCarriers")
+
+
+                        v-card-actions.mb-5(v-if="basicData.iataCode !== undefined")
+                            v-spacer
+                            airport-select-dialog.airport-selection(label="Compare with other airport", action="Select", @return-action="compareAirportSelected")
+                            v-btn(color="orange", dark) Compare with airports in vicinity
 
 
 
@@ -55,10 +55,16 @@
                 mapObject: null,
                 airportsProcessed: {},
                 polylines: [],
-                markers: []
+                markers: [],
+                comparisonBasicData: {},
+                showComparison: 0
             }
         },
         methods: {
+            compareAirportSelected(item) {
+                this.comparisonBasicData = item
+                this.$router.push({name: 'airport-comparison', params: {basicData1: this.basicData, detailedData1: this.detailedData, basicData2: item}})
+            },
             loadMap() {
                 var options = {
                     draggable: true,

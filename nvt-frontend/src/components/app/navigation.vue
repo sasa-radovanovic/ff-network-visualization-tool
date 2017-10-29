@@ -5,9 +5,6 @@
 
                 v-spacer
 
-                v-btn(icon='')
-                    v-icon search
-
                 v-tooltip(bottom)
                     v-btn(icon, slot="activator", :to="{name: 'airlines'}")
                         v-icon local_airport

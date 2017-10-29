@@ -12,7 +12,7 @@
                         v-flex(xs3)
                             v-btn.mt-3(primary, @click="performSearch", :disabled="searchCriteria.length < 3") Search
                         v-flex(xs12)
-                            span(v-if="searchCriteria !== undefined") Showing {{airports.airportDtoList.length}}/{{airports.totalNum}} for search criteria '{{ criteriaUsed }}'
+                            span(v-if="airports !== undefined && airports.airportDtoList !== undefined && searchCriteria !== undefined") Showing {{airports.airportDtoList.length}}/{{airports.totalNum}} for search criteria '{{ criteriaUsed }}'
                             v-data-table.elevation-1(:headers='headers', :items='airports.airportDtoList', hide-actions)
                                 template(slot='items', slot-scope='props')
 
