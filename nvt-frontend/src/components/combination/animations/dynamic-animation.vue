@@ -50,11 +50,6 @@
                         v-card-text.grey.lighten-3
                             dynamic-stats(:rotations="processedRotations")
 
-            //v-card
-                v-card-text
-                    p(v-for="r in processedRotations") {{r.data.originIataCode}} {{r.data.destinationIataCode}} >>> {{r.flying}} >>> {{r.flyingMins}} {{r.flightTime}}
-
-
             #mapCanvas.static-map-holder.mt-5.mb-5
                 p Map holder
 </template>
@@ -159,7 +154,6 @@
                         previous = this.day
                     }
 
-                    console.log('check previous ' + previous)
                     if (_preparedRotation[previous] === true) {
 
                         let timeUntilMidnight = 24 * 60 - departureMinutesFromMidnight
@@ -170,18 +164,11 @@
                         }
 
                     }
-
-                    console.log('COMPARING ' + this.day + ' with value ' + _preparedRotation[this.day])
-
                     if (_preparedRotation[this.day] === true) {
-                        //let depTime = Number(this.day) * 60 * 24 + _preparedRotation.departureMinutes
-
-                        console.log('Starting animation')
 
                         if (startingMinutes > _preparedRotation.departureMinutes && startingMinutes < (_preparedRotation.departureMinutes + _preparedRotation.flightTime)) {
                             _preparedRotation.flying = true
                             _preparedRotation.flyingMins = (startingMinutes - _preparedRotation.departureMinutes)
-                            console.log('set icon to ', _preparedRotation)
                             this.setIcon(_preparedRotation, true, (_preparedRotation.flyingMins / _preparedRotation.flightTime) * 100)
                         }
                     }

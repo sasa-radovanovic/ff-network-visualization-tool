@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.TimeZone;
+import java.util.*;
 import java.util.function.Function;
 
 
@@ -44,7 +41,7 @@ public class AirportServiceImpl implements AirportService {
         log.info("AirportServiceImpl.loadAirports | Loading airports to DB");
 
 
-        try{
+        try {
             log.info("AirportServiceImpl.loadAirports | Reading file...");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
@@ -81,7 +78,7 @@ public class AirportServiceImpl implements AirportService {
         return airport;
     };
 
-    private String trimQuotes (String s) {
+    private String trimQuotes(String s) {
         return s.replaceAll("^\"|\"$", "");
     }
 
@@ -136,20 +133,12 @@ public class AirportServiceImpl implements AirportService {
         List<AirlineRoute> routesFromAirport = airlineRouteService.getRoutesFromAirport(airport);
         ArrayList<AirportConnection> connections = new ArrayList<>();
 
-        List<AirlineDto> airlinesOperating = new ArrayList<>();
+        HashMap<String, AirlineDto> airlinesOperating = new HashMap<>();
 
         routesFromAirport.forEach(route -> {
 
-            Optional<AirlineDto> existing = airlinesOperating.stream().filter(airlineDto -> {
-                if (airlineDto != null && route.getAirline() != null) {
-                    return airlineDto.getUniqueId().equalsIgnoreCase(route.getAirline().getUniqueId());
-                } else {
-                    return false;
-                }
-            }).findAny();
-
-            if (!existing.isPresent()) {
-                airlinesOperating.add(DomainMapper.airlineToAirlineDto(route.getAirline()));
+            if (!airlinesOperating.containsKey(route.getAirline().getUniqueId())) {
+                airlinesOperating.put(route.getAirline().getUniqueId(), DomainMapper.airlineToAirlineDto(route.getAirline()));
             }
 
             AirportConnection airportConnection = new AirportConnection();
@@ -177,6 +166,86 @@ public class AirportServiceImpl implements AirportService {
         airportDetailed.setOperatingCarriers(airlinesOperating);
 
         return airportDetailed;
+    }
+
+    @Override
+    public AirportVicinityStats airportsInVicinity(String iataCode, int radius) {
+
+        AirportVicinityStats airportVicinityStats = new AirportVicinityStats();
+
+        Airport airport = airportRepository.findByIataCode(iataCode.toUpperCase());
+
+
+        List<Airport> airportsApprox = airportRepository.findAllByLatitudeBetweenAndLongitudeBetween(airport.getLatitude() - (radius / 100 + 1),
+                airport.getLatitude() + (radius / 100 + 1),
+                airport.getLongitude() - (radius / 100 + 1),
+                airport.getLongitude() + (radius / 100 + 1));
+
+        List<AirportVicinitySingleAirport> airportVicinitySingleAirports = new ArrayList<>();
+
+        airportsApprox.forEach(a -> {
+            if (distance(a.getLatitude(), airport.getLatitude(), a.getLongitude(), airport.getLongitude()) <= radius * 1000) {
+                AirportVicinitySingleAirport airportVicinitySingleAirport = new AirportVicinitySingleAirport();
+                airportVicinitySingleAirport.setLongitude(a.getLongitude());
+                airportVicinitySingleAirport.setLatitude(a.getLatitude());
+                airportVicinitySingleAirport.setName(a.getAirportName());
+                airportVicinitySingleAirport.setCountry(a.getCountry());
+                airportVicinitySingleAirport.setCity(a.getCity());
+                airportVicinitySingleAirport.setIataCode(a.getIataCode());
+                airportVicinitySingleAirport.setIcaoCode(a.getIcaoCode());
+
+                List<AirlineRoute> routesFromAirport = airlineRouteService.getRoutesFromAirport(a);
+
+                HashMap<String, Airline> airlines = new HashMap<>();
+
+                routesFromAirport.forEach(ar -> {
+                    if (!airlines.containsKey(ar.getAirline().getIataCode())) {
+                        airlines.put(ar.getAirline().getIataCode(), ar.getAirline());
+                    }
+                });
+
+                airportVicinitySingleAirport.setCarriers(airlines.keySet().size());
+
+                airportVicinitySingleAirport.setRoutes(routesFromAirport.size());
+
+                airportVicinitySingleAirports.add(airportVicinitySingleAirport);
+            }
+
+        });
+
+        airportVicinityStats.setAirports(airportVicinitySingleAirports);
+
+        return airportVicinityStats;
+
+    }
+
+
+    /**
+     * Calculate distance between two points in latitude and longitude taking
+     * into account height difference. If you are not interested in height
+     * difference pass 0.0. Uses Haversine method as its base.
+     * <p>
+     * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
+     * el2 End altitude in meters
+     *
+     * @returns Distance in Meters
+     */
+    private static double distance(double lat1, double lat2, double lon1,
+                                   double lon2) {
+
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        distance = Math.pow(distance, 2);
+
+        return Math.sqrt(distance);
     }
 
 }

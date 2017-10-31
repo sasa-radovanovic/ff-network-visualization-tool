@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by sasaradovanovic on 10/10/17.
  */
@@ -21,4 +23,6 @@ public interface AirportRepository extends CrudRepository<Airport, Long> {
                                                                                                                String iataCode,
                                                                                                                String icaoCode,
                                                                                                                Pageable pageable);
+
+    List<Airport> findAllByLatitudeBetweenAndLongitudeBetween(double latitude1, double latitude2, double longitude1, double longitude2);
 }

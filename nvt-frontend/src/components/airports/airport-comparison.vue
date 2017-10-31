@@ -22,7 +22,7 @@
                                 v-progress-linear(:value="connectionValue", height="20", color="info", background-color="orange")
 
                             v-flex(xs12).mt-2
-                                p Operating carriers from airport ({{basicData1.iataCode}} = {{detailedData1.operatingCarriers.length}} vs. {{basicData2.iataCode}} = {{detailedData2.operatingCarriers.length}})
+                                p Operating carriers from airport ({{basicData1.iataCode}} = {{Object.values(detailedData1.operatingCarriers).length}} vs. {{basicData2.iataCode}} = {{Object.values(detailedData2.operatingCarriers).length}})
                                 v-progress-linear(:value="carriersValue", height="20", color="info", background-color="orange")
 
                             v-flex(xs12).mt-2
@@ -34,7 +34,7 @@
                                                 v-toolbar-title.toolbar-carriers-title Carriers operating from {{basicData1.iataCode}} only
                                                 v-spacer
                                             v-list(two-line)
-                                                template(v-for="(item, index) in sortedCarriers[basicData1.iataCode]")
+                                                template(v-for="(item, index) in Object.values(sortedCarriers[basicData1.iataCode])")
                                                     v-list-tile(avatar, ripple, :key="item.uniqueId")
                                                         v-list-tile-content
                                                             v-list-tile-title {{item.name}} [{{item.iataCode}} / {{item.icaoCode}}]
@@ -48,7 +48,7 @@
                                                 v-spacer
 
                                             v-list(two-line)
-                                                template(v-for="(item, index) in sortedCarriers['both']")
+                                                template(v-for="(item, index) in Object.values(sortedCarriers['both'])")
                                                     v-list-tile(avatar, ripple, :key="item.uniqueId")
                                                         v-list-tile-content
                                                             v-list-tile-title {{item.name}} [{{item.iataCode}} / {{item.icaoCode}}]
@@ -60,7 +60,7 @@
                                                 v-toolbar-title.toolbar-carriers-title Carriers operating from {{basicData2.iataCode}} only
                                                 v-spacer
                                             v-list(two-line)
-                                                template(v-for="(item, index) in sortedCarriers[basicData2.iataCode]")
+                                                template(v-for="(item, index) in Object.values(sortedCarriers[basicData2.iataCode])")
                                                     v-list-tile(avatar, ripple, :key="item.uniqueId")
                                                         v-list-tile-content
                                                             v-list-tile-title {{item.name}} [{{item.iataCode}} / {{item.icaoCode}}]
@@ -89,10 +89,7 @@
         },
         methods: {
             loadData() {
-                console.log('COMPARE1', this.basicData1)
-                console.log('COMPARE2', this.basicData2)
                 airportDetails(this.basicData2.iataCode).then(rsp => {
-                    console.log(rsp)
                     this.detailedData2 = rsp
                     this.sortCarriers()
                 })
@@ -101,31 +98,29 @@
 
                 this.dataPrepared = false
 
-                this.sortedCarriers[this.basicData2.iataCode] = []
-                this.sortedCarriers[this.basicData1.iataCode] = []
-                this.sortedCarriers['both'] = []
-                let existsInSecond
-                console.log(this.detailedData2)
-                let self = this
-                this.detailedData1.operatingCarriers.forEach(function (oc) {
-                    existsInSecond = self.detailedData2.operatingCarriers.filter(function(oc2) {
-                        return oc2.uniqueId === oc.uniqueId
-                    })
+                this.sortedCarriers[this.basicData2.iataCode] = {}
+                this.sortedCarriers[this.basicData1.iataCode] = {}
+                this.sortedCarriers['both'] = {}
 
-                    if (existsInSecond !== undefined && existsInSecond.length > 0) {
-                        self.sortedCarriers['both'].push(oc)
-                        self.detailedData2.operatingCarriers = self.detailedData2.operatingCarriers.filter(function(ocD) {
-                            return oc.uniqueId !== ocD.uniqueId
-                        })
+                let self = this
+
+                Object.keys(this.detailedData1.operatingCarriers).forEach(function (uniqueId) {
+
+                    if (self.detailedData2.operatingCarriers[uniqueId] !== undefined) {
+                        self.sortedCarriers['both'][uniqueId]  = {}
+                        self.sortedCarriers['both'][uniqueId]  = self.detailedData1.operatingCarriers[uniqueId]
                     } else {
-                        self.sortedCarriers[self.basicData1.iataCode].push(oc)
+                        self.sortedCarriers[self.basicData1.iataCode][uniqueId] = {}
+                        self.sortedCarriers[self.basicData1.iataCode][uniqueId]  = self.detailedData1.operatingCarriers[uniqueId]
                     }
+
                 })
 
-                console.log('sorted pre 2')
-
-                this.detailedData2.operatingCarriers.forEach(function(oc) {
-                    self.sortedCarriers[self.basicData2.iataCode].push(oc)
+                Object.keys(this.detailedData2.operatingCarriers).forEach(function (uniqueId) {
+                    if (self.sortedCarriers['both'][uniqueId] === undefined) {
+                        self.sortedCarriers[self.basicData2.iataCode][uniqueId] = {}
+                        self.sortedCarriers[self.basicData2.iataCode][uniqueId]  = self.detailedData2.operatingCarriers[uniqueId]
+                    }
                 })
 
                 this.dataPrepared = true
@@ -150,7 +145,7 @@
                 return (this.detailedData1.connections.length / (this.detailedData1.connections.length + this.detailedData2.connections.length)) * 100
             },
             carriersValue() {
-                return (this.detailedData1.operatingCarriers.length / (this.detailedData1.operatingCarriers.length + this.detailedData2.operatingCarriers.length)) * 100
+                return (Object.keys(this.detailedData1.operatingCarriers).length / (Object.keys(this.detailedData1.operatingCarriers).length + Object.keys(this.detailedData2.operatingCarriers).length)) * 100
             }
         }
     }

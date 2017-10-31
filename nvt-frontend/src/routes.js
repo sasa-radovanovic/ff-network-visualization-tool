@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Combinations from './components/combination/combinations'
-import NewCombination from './components/combination/create-combination.vue'
-import EditCombination from './components/combination/edit-combination.vue'
-import StaticAnimation from './components/combination/animations/static-animation.vue'
-import DynamicAnimation from './components/combination/animations/dynamic-animation.vue'
-import AirlineSearch from './components/airlines/airline-search.vue'
-import AirlineNetwork from './components/airlines/airline-network.vue'
+import NewCombination from './components/combination/create-combination'
+import EditCombination from './components/combination/edit-combination'
+import StaticAnimation from './components/combination/animations/static-animation'
+import DynamicAnimation from './components/combination/animations/dynamic-animation'
+import AirlineSearch from './components/airlines/airline-search'
+import AirlineNetwork from './components/airlines/airline-network'
 import AirportSearch from './components/airports/airport-search'
 import AirportComparison from './components/airports/airport-comparison'
+import AirportVicinityComparison from './components/airports/airport-vicinity-comparison'
 
 Vue.use(VueRouter)
 
@@ -72,6 +73,11 @@ const router = new VueRouter({
             path: '/airport-comparison',
             component: AirportComparison,
             name: 'airport-comparison'
+        },
+        {
+            path: '/airport-vicinity-comparison',
+            component: AirportVicinityComparison,
+            name: 'airport-vicinity-comparison'
         },
         {
             path: '*',

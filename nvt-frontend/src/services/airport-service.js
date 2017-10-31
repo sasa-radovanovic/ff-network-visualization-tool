@@ -25,3 +25,17 @@ export function airportDetails(iataCode){
         })
 
 }
+
+
+
+export function airportVicinityStats(iataCode, radius){
+    return httpSpinner.get(`${airportsApi}` + '/vicinity?iata=' + iataCode + '&radius=' + radius)
+        .then(response => {
+            return response.data;
+        })
+        .catch(err => {
+            console.log('Error retrieving Airport Vicinity stats',err)
+            return err
+        })
+
+}

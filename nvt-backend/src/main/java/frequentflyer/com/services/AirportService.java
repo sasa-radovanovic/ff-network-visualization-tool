@@ -2,6 +2,7 @@ package frequentflyer.com.services;
 
 import frequentflyer.com.domain.AirportDetailed;
 import frequentflyer.com.domain.AirportSearchDto;
+import frequentflyer.com.domain.AirportVicinityStats;
 import frequentflyer.com.entities.Airport;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,5 +21,7 @@ public interface AirportService {
     AirportSearchDto partialSearch(String searchCriteria);
 
     AirportDetailed airportData(String iataCode);
+
+    AirportVicinityStats airportsInVicinity(String iataCode, int radius);
 
 }

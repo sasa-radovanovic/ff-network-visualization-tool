@@ -16,14 +16,14 @@
                             #mapCanvas.static-map-holder
                                 p
 
-                            p(v-if="detailedData.operatingCarriers !== undefined") Operating carriers from {{basicData.iataCode}}: {{detailedData.operatingCarriers.length}}
+                            p(v-if="detailedData.operatingCarriers !== undefined") Operating carriers from {{basicData.iataCode}}: {{Object.keys(detailedData.operatingCarriers).length}}
                             operating-carriers(v-if="detailedData.operatingCarriers !== undefined", :carriers="detailedData.operatingCarriers")
 
 
                         v-card-actions.mb-5(v-if="basicData.iataCode !== undefined")
                             v-spacer
                             airport-select-dialog.airport-selection(label="Compare with other airport", action="Select", @return-action="compareAirportSelected")
-                            v-btn(color="orange", dark) Compare with airports in vicinity
+                            v-btn(color="orange", dark, :to="{name: 'airport-vicinity-comparison', params: {basicData: basicData, detailedData: detailedData}}") Compare with airports in vicinity
 
 
 

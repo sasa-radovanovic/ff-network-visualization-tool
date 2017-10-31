@@ -2,6 +2,7 @@ package frequentflyer.com.domain;
 
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class AirportDetailed {
 
     private double latitude;
 
-    private List<AirlineDto> operatingCarriers;
+    private HashMap<String, AirlineDto> operatingCarriers;
 
     private List<AirportConnection> connections;
 }
