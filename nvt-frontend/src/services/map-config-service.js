@@ -269,3 +269,16 @@ export function generatePlaneSymbol () {
     }
     return planeSymbol
 }
+
+export function primaryAirportColor () {
+    return '#3385ff'
+}
+
+export function otherAirportsColor () {
+    return '#ff9999'
+}
+
+
+export function defaultAirportMapDataColor() {
+    return '#e69500'
+}

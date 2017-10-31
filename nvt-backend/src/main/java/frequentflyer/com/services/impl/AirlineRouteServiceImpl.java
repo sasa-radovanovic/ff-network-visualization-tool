@@ -44,6 +44,9 @@ public class AirlineRouteServiceImpl implements AirlineRouteService {
 
     int loaded = 0;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Async
     public void loadAirlineRoutes(InputStream inputStream) {
@@ -72,6 +75,9 @@ public class AirlineRouteServiceImpl implements AirlineRouteService {
     }
 
 
+    /**
+     * Map items from input file to database entities
+     */
     private Function<String, AirlineRoute> mapToItem = (line) -> {
         String[] p = line.split(COMMA);
         AirlineRoute airlineRoute = null;
@@ -109,23 +115,29 @@ public class AirlineRouteServiceImpl implements AirlineRouteService {
     }
 
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<AirlineRouteDto> getAirlineRoutes(String uniqueId, boolean codeshares) {
 
+        // Return object holder
         List<AirlineRouteDto> airlineRouteDtoList = new ArrayList<>();
 
+        // Retrieve airline from database
         Airline airline = airlineService.findAirlineByUniqueCode(uniqueId);
 
+        // Retrieve airline routes for an airline
         List<AirlineRoute> airlineRoutes = airlineRouteRepository.findAllByAirlineAndCodeshare(airline, false);
 
+        // Include codeshared flights also?
         if (codeshares) {
             airlineRoutes.addAll(airlineRouteRepository.findAllByAirlineAndCodeshare(airline, true));
         }
 
-        log.info("FOUND AIRLINES ROUTES " + airlineRoutes.size());
-
+        // Map airline route object to DTO
         airlineRoutes.forEach(ar -> {
+
             AirlineRouteDto airlineRouteDto = new AirlineRouteDto();
 
             airlineRouteDto.setCodeshare(ar.getCodeshare());
@@ -154,6 +166,9 @@ public class AirlineRouteServiceImpl implements AirlineRouteService {
         return airlineRouteDtoList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<AirlineRoute> getRoutesFromAirport(Airport airport) {
         return airlineRouteRepository.findAllByOriginOrDestinationAndCodeshare(airport, airport, false);

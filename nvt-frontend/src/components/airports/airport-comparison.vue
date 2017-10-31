@@ -133,7 +133,6 @@
                 this.basicData1 = this.$route.params.basicData1
                 this.basicData2 = this.$route.params.basicData2
                 this.detailedData1 = this.$route.params.detailedData1
-                console.log('params prepared')
                 this.loadData()
             }
         },

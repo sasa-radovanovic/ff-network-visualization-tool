@@ -71,7 +71,6 @@
                 }
                 this.criteriaUsed = this.searchCriteria
                 partialSearch(this.searchCriteria).then(rsp => {
-                    console.log(rsp)
                     this.airports = rsp
                 }).catch(err => {
                     this.airports = {

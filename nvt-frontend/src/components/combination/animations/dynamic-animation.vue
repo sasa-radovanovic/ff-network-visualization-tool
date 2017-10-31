@@ -229,8 +229,6 @@
 
                     self.minutesGone++
 
-                    console.log('minutes: ', self.minutesGone)
-
                     self.pingRotations()
 
                     if (self.minutesGone == 10080) {

@@ -45,7 +45,7 @@
 
 <script>
 
-    import { mapConfigurationFactory, generatePin, generateInfoWindow } from './../../services/map-config-service'
+    import { mapConfigurationFactory, generatePin, generateInfoWindow, otherAirportsColor, primaryAirportColor  } from './../../services/map-config-service'
 
     import { airportVicinityStats } from './../../services/airport-service'
 
@@ -140,7 +140,7 @@
                         lng: this.detailedData.longitude
                     },
                     map: this.mapObject,
-                    icon: generatePin('3385ff'),
+                    icon: generatePin(primaryAirportColor().substring(1)),
                     title: this.basicData.name
                 });
                 marker.setMap(this.mapObject)
@@ -150,37 +150,41 @@
                 marker.addListener('click', function() {
                     generateInfoWindow(self.basicData.iataCode,
                         self.basicData.icaoCode, self.basicData.name, self.basicData.city, self.basicData.country,
-                        self.detailedData.longitude, self.detailedData.latitude, '#3385ff').open(self.mapObject, marker);
+                        self.detailedData.longitude, self.detailedData.latitude, primaryAirportColor()).open(self.mapObject, marker);
                 });
 
                 this.markers.push(marker)
             },
             loadAirports() {
                 this.radiusUsed = this.radius
+
                 airportVicinityStats(this.basicData.iataCode, this.radius).then(rsp => {
                     this.airports = rsp.airports
-                    console.log(rsp)
                     this.airports.forEach(airport => {
-                        var marker = new google.maps.Marker({
-                            position: {
-                                lat: airport.latitude,
-                                lng: airport.longitude
-                            },
-                            map: this.mapObject,
-                            icon: generatePin('ff9999'),
-                            title: this.basicData.name
-                        });
-                        marker.setMap(this.mapObject)
 
-                        let self = this
+                        if (airport.iataCode !== this.basicData.iataCode) {
 
-                        marker.addListener('click', function() {
-                            generateInfoWindow(airport.iataCode,
-                                airport.icaoCode, airport.name, airport.city, airport.country,
-                                airport.longitude, airport.latitude, '#ff9999').open(self.mapObject, marker);
-                        });
+                            var marker = new google.maps.Marker({
+                                position: {
+                                    lat: airport.latitude,
+                                    lng: airport.longitude
+                                },
+                                map: this.mapObject,
+                                icon: generatePin(otherAirportsColor().substring(1)),
+                                title: this.basicData.name
+                            });
+                            marker.setMap(this.mapObject)
 
-                        this.markers.push(marker)
+                            let self = this
+
+                            marker.addListener('click', function () {
+                                generateInfoWindow(airport.iataCode,
+                                    airport.icaoCode, airport.name, airport.city, airport.country,
+                                    airport.longitude, airport.latitude, otherAirportsColor()).open(self.mapObject, marker);
+                            });
+
+                            this.markers.push(marker)
+                        }
                     })
                 })
             }

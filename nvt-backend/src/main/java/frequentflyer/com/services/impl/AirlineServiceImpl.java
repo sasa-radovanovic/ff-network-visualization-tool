@@ -30,9 +30,15 @@ public class AirlineServiceImpl implements AirlineService {
 
     private final String COMMA = ",";
 
+    /**
+     * {@inheritDoc}
+     */
     @Autowired
     private AirlineRepository airlineRepository;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadAirlines(InputStream inputStream) {
         log.info("AirlineServiceImpl.loadAirlines | Loading airlines to DB");
@@ -54,7 +60,9 @@ public class AirlineServiceImpl implements AirlineService {
         }
     }
 
-
+    /**
+     * Map line from input file to database entity
+     */
     private Function<String, Airline> mapToItem = (line) -> {
         String[] p = line.split(COMMA);
         Airline airline = null;
@@ -70,11 +78,18 @@ public class AirlineServiceImpl implements AirlineService {
         return airline;
     };
 
+    /**
+     * Trim quotes from input data
+     * @param s
+     * @return
+     */
     private String trimQuotes (String s) {
         return s.replaceAll("^\"|\"$", "");
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Airline findAirlineByIataCode(String iataCode) {
         try {
@@ -85,11 +100,17 @@ public class AirlineServiceImpl implements AirlineService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Airline findAirlineByUniqueCode(String uniqueCode) {
         return airlineRepository.findByUniqueId(uniqueCode);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AirlineSearchDto partialSearch(String searchCriteria) {
 
@@ -120,6 +141,9 @@ public class AirlineServiceImpl implements AirlineService {
         return airlineSearchDto;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AirlineDto getAirlineData(String uniqueId) {
         Airline airline = airlineRepository.findByUniqueId(uniqueId);

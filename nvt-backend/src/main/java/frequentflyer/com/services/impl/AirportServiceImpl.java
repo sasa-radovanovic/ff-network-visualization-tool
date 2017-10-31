@@ -59,6 +59,9 @@ public class AirportServiceImpl implements AirportService {
 
     }
 
+    /**
+     * Map line from input file to database entity
+     */
     private Function<String, Airport> mapToItem = (line) -> {
         String[] p = line.split(COMMA);
         Airport airport = null;

@@ -37,11 +37,9 @@
         },
         computed: {
             filteredRotations() {
-                console.log(this.rotations)
                 let filtered =  this.rotations.filter(r => {
                     return r.flying === true
                 })
-                console.log("Filtered", filtered)
                 return filtered
             }
         }

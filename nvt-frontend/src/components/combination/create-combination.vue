@@ -108,7 +108,6 @@
                     this.showSnackbar = !this.showSnackbar
                     this.$router.push({name: 'combinations', params : {newCombination : true}})
                 }).catch(err => {
-                    console.log(err)
                     this.toasterText ='Error creating combination'
                     this.showSnackbar = !this.showSnackbar
                 })

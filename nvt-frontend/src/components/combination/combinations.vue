@@ -75,7 +75,6 @@
         methods: {
             retrieveCombinations() {
                 getCombinations().then(rsp => {
-                    console.log('COMBS ARE HERE', rsp)
                     this.combinations = rsp
                 })
             },

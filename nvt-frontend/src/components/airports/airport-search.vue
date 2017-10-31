@@ -34,7 +34,7 @@
 
 <script>
 
-    import { mapConfigurationFactory, generatePin, generateInfoWindow } from './../../services/map-config-service'
+    import { mapConfigurationFactory, generatePin, generateInfoWindow, defaultAirportMapDataColor } from './../../services/map-config-service'
     import AirportSelectDialog from './../combination/airports/airports-select-dialog'
     import Snackbar from './../../common/components/snackbar.vue'
     import { airportDetails } from './../../services/airport-service'
@@ -96,7 +96,7 @@
 
                 markerAirport.setMap(this.mapObject)
 
-                var _color = "#e69500"
+                var _color = defaultAirportMapDataColor()
 
                 var self = this
 
@@ -127,7 +127,7 @@
 
                         markerDestination.setMap(this.mapObject)
 
-                        var _color = "#e69500"
+                        var _color = defaultAirportMapDataColor()
 
 
                         markerDestination.addListener('click', function() {
@@ -154,7 +154,7 @@
                     var flightPath = new google.maps.Polyline({
                         path: flightPlanCoordinates,
                         geodesic: true,
-                        strokeColor: '#e69500',
+                        strokeColor: defaultAirportMapDataColor(),
                         strokeOpacity: 0.8,
                         strokeWeight: 1
                     })
