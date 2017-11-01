@@ -13,13 +13,38 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AirlineRepository extends CrudRepository<Airline, Long> {
 
+    /**
+     *
+     * Retrieve Airline by IATA code
+     *
+     * @param iataCode
+     * @return
+     */
     Airline findByIataCode(String iataCode);
 
+    /**
+     *
+     * Retrieve Airline by Unique ID
+     *
+     * @param uniqueId
+     * @return
+     */
     Airline findByUniqueId(String uniqueId);
 
+    /**
+     *
+     * Retrieve a page for searching airlines
+     *
+     * @param airlineName
+     * @param iata
+     * @param icao
+     * @param country
+     * @param pageable
+     * @return
+     */
     Page<Airline> findByAirlineNameContainsOrIataCodeContainsOrIcaoCodeContainsOrCountryContains(String airlineName,
                                                                                                                String iata,
                                                                                                                String icao,
                                                                                                                String country,
-                                                                                                               Pageable pageable);
+                                                                                                 Pageable pageable);
 }

@@ -36,6 +36,9 @@ public class AirportServiceImpl implements AirportService {
     @Autowired
     private AirlineRouteService airlineRouteService;
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public void loadAirports(InputStream inputStream) {
         log.info("AirportServiceImpl.loadAirports | Loading airports to DB");
@@ -81,6 +84,13 @@ public class AirportServiceImpl implements AirportService {
         return airport;
     };
 
+    /**
+     *
+     * Trim quotes from input file
+     *
+     * @param s
+     * @return
+     */
     private String trimQuotes(String s) {
         return s.replaceAll("^\"|\"$", "");
     }
@@ -91,10 +101,14 @@ public class AirportServiceImpl implements AirportService {
         return airportRepository.findByIataCode(code);
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public AirportSearchDto partialSearch(String searchCriteria) {
         AirportSearchDto airportSearchDto = new AirportSearchDto();
 
+        // Retrieve a page from database
         Page<Airport> airports = airportRepository.findByAirportNameContainsOrCityContainsOrCountryContainsOrIataCodeContainsOrIcaoCodeContains(searchCriteria,
                 searchCriteria, searchCriteria, searchCriteria, searchCriteria, new PageRequest(0, 50));
 
@@ -102,7 +116,7 @@ public class AirportServiceImpl implements AirportService {
 
         List<AirportDto> airportDtoList = new ArrayList<>();
 
-
+        // Transform data to DTO objects
         airports.forEach(a -> {
             AirportDto airportDto = new AirportDto();
             airportDto.setName(a.getAirportName());
@@ -119,31 +133,42 @@ public class AirportServiceImpl implements AirportService {
         return airportSearchDto;
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public AirportDetailed airportData(String iataCode) {
 
+        // Return value holder
         AirportDetailed airportDetailed = new AirportDetailed();
 
+        // Retrieve airport from database
         Airport airport = airportRepository.findByIataCode(iataCode.toUpperCase());
 
         if (airport == null) {
             throw new NvtServiceException("Airport not found");
         }
 
+        // Set geo position
         airportDetailed.setLongitude(airport.getLongitude());
         airportDetailed.setLatitude(airport.getLatitude());
 
+        // Retrieve all routes for airport from database
         List<AirlineRoute> routesFromAirport = airlineRouteService.getRoutesFromAirport(airport);
         ArrayList<AirportConnection> connections = new ArrayList<>();
 
+        // Operating carriers data
         HashMap<String, AirlineDto> airlinesOperating = new HashMap<>();
 
+        // Loop through every route from the airport and extract data concerning operating carrier
+        // And route itself
         routesFromAirport.forEach(route -> {
 
             if (!airlinesOperating.containsKey(route.getAirline().getUniqueId())) {
                 airlinesOperating.put(route.getAirline().getUniqueId(), DomainMapper.airlineToAirlineDto(route.getAirline()));
             }
 
+            // Form DTO object
             AirportConnection airportConnection = new AirportConnection();
             if (route.getOrigin().getIataCode().equalsIgnoreCase(airport.getIataCode())) {
                 airportConnection.setCity(route.getDestination().getCity());
@@ -171,14 +196,24 @@ public class AirportServiceImpl implements AirportService {
         return airportDetailed;
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public AirportVicinityStats airportsInVicinity(String iataCode, int radius) {
 
+        // Return data holder
         AirportVicinityStats airportVicinityStats = new AirportVicinityStats();
 
+        // Extract airport from database
         Airport airport = airportRepository.findByIataCode(iataCode.toUpperCase());
 
 
+        // Extract all airports in vicinity form database
+        // NOTE: since we are requesting airports in a radius of XX kilometers and we operate with degrees the procedure is following:
+        // We take radius from request, divide it with 100 and 1 (if request holds 450 => the value is 5)
+        // Then we extract all airports in a square from target airport longitude/latitude and +/- previous value
+        // Afterwards we apply calculation to filter all airports which satisfy distance criteria
         List<Airport> airportsApprox = airportRepository.findAllByLatitudeBetweenAndLongitudeBetween(airport.getLatitude() - (radius / 100 + 1),
                 airport.getLatitude() + (radius / 100 + 1),
                 airport.getLongitude() - (radius / 100 + 1),
@@ -187,6 +222,7 @@ public class AirportServiceImpl implements AirportService {
         List<AirportVicinitySingleAirport> airportVicinitySingleAirports = new ArrayList<>();
 
         airportsApprox.forEach(a -> {
+            // If airport extracted is actually in given distance radius
             if (distance(a.getLatitude(), airport.getLatitude(), a.getLongitude(), airport.getLongitude()) <= radius * 1000) {
                 AirportVicinitySingleAirport airportVicinitySingleAirport = new AirportVicinitySingleAirport();
                 airportVicinitySingleAirport.setLongitude(a.getLongitude());
@@ -197,6 +233,7 @@ public class AirportServiceImpl implements AirportService {
                 airportVicinitySingleAirport.setIataCode(a.getIataCode());
                 airportVicinitySingleAirport.setIcaoCode(a.getIcaoCode());
 
+                // For every airport extract routes from it, calculate number of operating carriers and number of routes
                 List<AirlineRoute> routesFromAirport = airlineRouteService.getRoutesFromAirport(a);
 
                 HashMap<String, Airline> airlines = new HashMap<>();
@@ -227,16 +264,15 @@ public class AirportServiceImpl implements AirportService {
      * Calculate distance between two points in latitude and longitude taking
      * into account height difference. If you are not interested in height
      * difference pass 0.0. Uses Haversine method as its base.
-     * <p>
+     *
      * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
-     * el2 End altitude in meters
      *
      * @returns Distance in Meters
      */
     private static double distance(double lat1, double lat2, double lon1,
                                    double lon2) {
-
-        final int R = 6371; // Radius of the earth
+        // Radius of the earth
+        final int R = 6371;
 
         double latDistance = Math.toRadians(lat2 - lat1);
         double lonDistance = Math.toRadians(lon2 - lon1);

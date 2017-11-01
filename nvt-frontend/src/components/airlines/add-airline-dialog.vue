@@ -45,12 +45,16 @@
         data () {
             return {
                 dialog: false,
+                // Criteria used for search
                 searchCriteria: '',
+                // Current criteria model
                 criteriaUsed: '',
+                // Search results
                 airlines: {
                     totalNum: 0,
                     airlineDtoList: []
                 },
+                // Headers for data table
                 headers: [
                     {
                         text: 'Code (IATA/ICAO)',
@@ -69,12 +73,14 @@
                 this.dialog = false
             },
             performSearch() {
+                // At least 3 characters needed for search (this if branch is here due to enter key handler)
                 if (this.searchCriteria.length < 3) {
                     return
                 }
+                // Map criteria used
                 this.criteriaUsed = this.searchCriteria
+                // Perform search
                 partialSearch(this.searchCriteria).then(rsp => {
-                    console.log(rsp)
                     this.airlines = rsp
                 }).catch(err => {
                     this.airlines = {
@@ -83,8 +89,11 @@
                     }
                 })
             },
+            // On selection action
             returnAction(item) {
+                // Emit event to parent component
                 this.$emit('selected-airline', item)
+                // Clear data
                 this.searchCriteria = ''
                 this.criteriaUsed = ''
                 this.airlines = {
@@ -96,8 +105,3 @@
         }
     }
 </script>
-
-
-<style scoped>
-
-</style>

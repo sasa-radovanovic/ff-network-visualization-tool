@@ -40,18 +40,27 @@ public class CombinationServiceImpl implements CombinationService {
     private RotationRepository rotationRepository;
 
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public void createCombination(String name, String color, List<CreateCombinationRotationDto> rotations) {
+
+        // Check if there is already combination with given name
         Combination combination = combinationRepository.findByCombinationName(name);
         if (combination != null) {
             log.info(combination.getCombinationName());
             log.error(" Combination already exists ");
             throw new NvtServiceException("Combination already exists.");
         }
+
         combination = new Combination();
         combination.setCombinationName(name);
         combination.setCombinationColor(color);
+
         final Combination savedCombination = combinationRepository.save(combination);
+
+        // Save all rotations for new combination
         rotations.forEach(rot -> {
             Airport origin = airportRepository.findByIataCode(rot.getOrigin().toUpperCase());
             Airport destination = airportRepository.findByIataCode(rot.getDestination().toUpperCase());
@@ -66,17 +75,23 @@ public class CombinationServiceImpl implements CombinationService {
         });
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public void removeCombination(Long id) {
         Combination combination = combinationRepository.findById(id);
         if (combination == null) {
             throw new NvtServiceException("Combination does not exist.");
         }
-
+        // Remove all rotations for given combination
         rotationService.removeAllRotationsForCombination(combination);
         combinationRepository.delete(combination);
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public List<CombinationDto> getAllCombinations() {
         List<Combination> combinationList = combinationRepository.findAll();
@@ -86,6 +101,9 @@ public class CombinationServiceImpl implements CombinationService {
         return combinationDtos;
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public Combination findById(Long id) {
         return combinationRepository.findById(id);

@@ -35,6 +35,9 @@ public class RotationServiceImpl implements RotationService {
     @Autowired
     private AirportService airportService;
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public void removeAllRotationsForCombination(Combination combination) {
 
@@ -44,18 +47,27 @@ public class RotationServiceImpl implements RotationService {
         }
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public void createNewRotation(String origin, String destination, String frequency,
-                                  String localDepartureTime, int flightLength, long combinationId) throws NvtServiceException{
+                                  String localDepartureTime, int flightLength, long combinationId) throws NvtServiceException {
+
+        // Retrieve combination
         Combination combination = combinationService.findById(combinationId);
         if (combination == null) {
             throw new NvtServiceException("No Combination found.");
         }
+
+        // Retrieve origin and destination airports
         Airport originAirport = airportService.findByAirportCode(origin.toUpperCase());
         Airport destinationAirport = airportService.findByAirportCode(destination.toUpperCase());
         if (originAirport == null || destinationAirport == null) {
             throw new NvtServiceException("Non-existing airport.");
         }
+
+        // Create rotation
         Rotation rotation = new Rotation();
         rotation.setOrigin(originAirport);
         rotation.setDestination(destinationAirport);
@@ -64,11 +76,15 @@ public class RotationServiceImpl implements RotationService {
         rotation.setFrequency(frequency);
         rotation.setFlightLength(flightLength);
 
+        // Validate rotation
         validateRotation(rotation);
 
         rotationRepository.save(rotation);
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public List<RotationDto> getAllRotationsForCombination(long combinationId) {
         Combination combination = combinationService.findById(combinationId);
@@ -82,6 +98,9 @@ public class RotationServiceImpl implements RotationService {
         return rotationDtos;
     }
 
+    /**
+     * {@inheritDoc
+     */
     @Override
     public void removeRotation(long id) {
         Rotation rotation = rotationRepository.findOne(id);
@@ -90,8 +109,14 @@ public class RotationServiceImpl implements RotationService {
         }
     }
 
-
+    /**
+     *
+     * Validate rotations
+     *
+     * @param rotation
+     */
     private void validateRotation(Rotation rotation) {
+        // Validate frequency
         if (rotation.getFrequency() == null || rotation.getFrequency().length() == 0) {
             throw new NvtServiceException("Frequency non existing.");
         }
@@ -99,6 +124,7 @@ public class RotationServiceImpl implements RotationService {
         if (frequencySegments.length == 0) {
             throw new NvtServiceException("No frequency segments.");
         }
+        // Validate days in freqency
         for (String day: frequencySegments) {
             try {
                 int dayNum = Integer.parseInt(day);
@@ -109,7 +135,6 @@ public class RotationServiceImpl implements RotationService {
                 throw new NvtServiceException("Invalid day in frequency.");
             }
         }
-        LocalTime localTimeVerified = LocalTime.parse(rotation.getLocalDepartureTime());
     }
 
 }

@@ -20,6 +20,13 @@ public class DomainMapper {
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
 
+    /**
+     *
+     * Map Combination to Combination DTO object
+     *
+     * @param combination
+     * @return {@link CombinationDto} object
+     */
     public static CombinationDto combinationToCombinationDto(Combination combination) {
         CombinationDto combinationDto = new CombinationDto();
         combinationDto.setId(combination.getId());
@@ -28,14 +35,19 @@ public class DomainMapper {
         return combinationDto;
     }
 
+    /**
+     *
+     * Map rotation to Rotation DTO object
+     *
+     * @param rotation
+     * @return
+     */
     public static RotationDto rotationToRotationDto(Rotation rotation) {
 
         RotationDto rotationDto = new RotationDto();
 
         Airport origin = rotation.getOrigin();
         Airport destination = rotation.getDestination();
-
-        log.info("Mapping to rotation to " + rotation.getOrigin().getIataCode() + " " + rotation.getDestination().getIataCode());
 
         rotationDto.setOriginIataCode(origin.getIataCode());
         rotationDto.setOriginIcaoCode(origin.getIcaoCode());
@@ -56,17 +68,18 @@ public class DomainMapper {
         rotationDto.setDestinationLatitude(destination.getLatitude());
         rotationDto.setDestinationLongitude(destination.getLongitude());
 
+
         rotationDto.setLocalDepartureTime(rotation.getLocalDepartureTime());
 
         // Set departure tine and length
         LocalTime lt = LocalTime.parse(rotation.getLocalDepartureTime());
 
-        log.info("Local dep time " + lt);
 
+        // Retrieve time zone difference between local departure time and UTC today
         long tzDiff = origin.getTimezone().getOffset(new Date().getTime());
 
-        log.info("TZ difference " + (tzDiff/1000));
 
+        // Form Local Time in UTC
         LocalTime utcStandardized;
 
         if (tzDiff > 0) {
@@ -77,10 +90,11 @@ public class DomainMapper {
             utcStandardized = lt;
         }
 
-
-        log.info("UTC time " + utcStandardized);
-
-
+        // Readapt days
+        // For example if flight departs on Monday at 01:00 local time, but
+        // local departure time is 2h in front of utc, that means that in UTC
+        // departure time is on Sunday at 23:00
+        // Other way (i.e. timezone behind UTC 4 hours and LDT is Sunday at 22:00) applies too
         if (tzDiff > 0) {
             if (utcStandardized.getHour() > lt.getHour()) {
                 // readapt days
@@ -104,9 +118,6 @@ public class DomainMapper {
 
         rotationDto.setDayMap(formDayMap(rotation.getFrequency(), 0));
 
-        log.info("UTC DAY MAP {}", rotationDto.getUtcDayMap());
-        log.info("DAY MAP {}", rotationDto.getDayMap());
-
         rotationDto.setUtcDepartureTime(utcStandardized.format(dtf));
         rotationDto.setFlightTime(rotation.getFlightLength());
         rotationDto.setId(rotation.getId());
@@ -115,7 +126,13 @@ public class DomainMapper {
         return rotationDto;
     }
 
-
+    /**
+     *
+     * Map Airline to Airline DTO object
+     *
+     * @param airline - {@link Airline} object
+     * @return {@link AirlineDto} object
+     */
     public static AirlineDto airlineToAirlineDto(Airline airline) {
         AirlineDto airlineDto = new AirlineDto();
         airlineDto.setName(airline.getAirlineName());
@@ -126,7 +143,14 @@ public class DomainMapper {
         return airlineDto;
     }
 
-
+    /**
+     *
+     * Form day map for Rotation object consisting of mappings DAY_NO : flying_that_day
+     *
+     * @param frequencyString - i.e. "1/4/5/6/7"
+     * @param shift - weather or not to readapt values due to UTC shift
+     * @return - HashMap of DAY_NO : flying_that_day values
+     */
     private static HashMap<String, Boolean> formDayMap (String frequencyString, int shift) {
         HashMap<String, Boolean> dayMap = new HashMap<>();
         for (int i=1; i<=7; i++) {
@@ -139,7 +163,14 @@ public class DomainMapper {
         return dayMap;
     }
 
-
+    /**
+     *
+     * Get number of day taking into account UTC shift
+     *
+     * @param i
+     * @param shift
+     * @return ordinal number of day
+     */
     private static int getDayIndexWithShift(int i, int shift) {
         if (shift > 0) {
             return (i + shift) <= 7 ? (i + shift) : 1;

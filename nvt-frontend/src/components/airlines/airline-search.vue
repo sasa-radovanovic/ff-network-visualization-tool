@@ -46,6 +46,7 @@
                     totalNum: 0,
                     airlineDtoList: []
                 },
+                // Data table headers
                 headers: [
                     {
                         text: 'Code (IATA/ICAO)',
@@ -65,7 +66,6 @@
                 }
                 this.criteriaUsed = this.searchCriteria
                 partialSearch(this.searchCriteria).then(rsp => {
-                    console.log(rsp)
                     this.airlines = rsp
                 }).catch(err => {
                     this.airlines = {

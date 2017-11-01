@@ -57,6 +57,7 @@
         },
         data () {
             return {
+                // Primary airline data holder
                 airline: {
                     uniqueId: '',
                     name: '',
@@ -65,10 +66,12 @@
                     country: '',
                     color: ''
                 },
+                // All airlines selected
                 airlinesInQueue: [],
+                // All combinations selected
                 combinationsInQueue: [],
 
-                border: 'orange',
+                // Data used for map processing
                 airlineRoutes: {},
                 codeshare: true,
                 mapObject: null,
@@ -83,9 +86,11 @@
             }
         },
         created() {
+            // If there is no data passed to component return to airlines page
             if (this.$route.params.airline === undefined) {
                 this.$router.push({name: 'airlines'})
             } else {
+                // Otherwise map objects and initiate
                 this.airline.uniqueId = this.$route.params.airline.uniqueId
                 this.airline.name = this.$route.params.airline.name
                 this.airline.iata = this.$route.params.airline.iataCode
@@ -96,9 +101,14 @@
             }
         },
         mounted(){
+            // Once component is mounted load the map
+            // NOTE: you cannot load the map on created lifecycle hook due to rendering process
+            // GMaps API required div to be presented in the dom
             this.loadMap()
         },
         watch: {
+          // Watch codeshare value change
+          // If codeshare value changes, reload data
           codeshare(val) {
               console.log('change occured to ' + val)
               this.airportsOnMap = {}
@@ -110,11 +120,19 @@
           }
         },
         methods: {
+
+            // Change visual appearance of airline
             changeAirlineColor(data) {
+
+                // Retrieve airline which is gonna be changed
                 this.airlinesInQueue.filter(airline => {
                     if (airline.iata === data.iata &&
                             airline.name === data.name) {
+
+                        // Apply new color
                         airline.color = data.color
+
+                        // Reinitialize map and data on it
                         this.airportsOnMap = {}
                         this.routesOnMap = {}
 
@@ -128,6 +146,7 @@
                     }
                 })
             },
+            // Remove certain airline from the queue
             removeAirline(iata) {
                 this.airlinesInQueue = this.airlinesInQueue.filter(a => {
                     return a.iata !== iata
@@ -143,18 +162,19 @@
                     this.retrieveAirlineRoutes(airline.uniqueId, airline.iata, airline.color, true)
                 })
             },
+            // Add combination to the queue
             prepareCombinationData(id, name, color) {
                 getRotations(id).then(rsp => {
                     this.prepareRoutes(rsp, name, color, true)
                     this.drawMap()
-                }).catch(err => {
-
                 })
             },
+            // Trigger adding combination routine
             onCombinationAdded(item) {
                 this.combinationsInQueue.push(item)
                 this.prepareCombinationData(item.id, item.name, item.color)
             },
+            // Trigger removing combination
             onCombinationRemoved(id) {
 
                 this.airportsOnMap = {}
@@ -173,6 +193,7 @@
                 })
 
             },
+            // Add new airline to the list
             onAirlineAdded(item) {
                 let newAirline = {}
                 newAirline.uniqueId = item.uniqueId
@@ -184,6 +205,7 @@
                 this.airlinesInQueue.push(newAirline)
                 this.retrieveAirlineRoutes(newAirline.uniqueId, newAirline.iata, newAirline.color, true)
             },
+            // Load map and initialize data
             loadMap(){
                 var options = {
                     draggable: true,
@@ -200,6 +222,7 @@
                 this.mapObject = new google.maps.Map(document.getElementById('mapCanvas'), options);
                 this.retrieveAirlineRoutes(this.airline.uniqueId, this.airline.iata, this.airline.color, true)
             },
+            // Retrive routes of a certain airline
             retrieveAirlineRoutes(uniqueId, iata, color, initiateRedraw) {
                 getAirlineRoutes(uniqueId, this.codeshare).then(rsp => {
                     this.prepareRoutes(rsp, iata, color, false)
@@ -210,9 +233,11 @@
 
                 })
             },
+            // Retrieve airline logo
             getAirlineLogoUrl(iata) {
                 return 'https://daisycon.io/images/airline/?width=250&height=80&color=ffffff&iata=' + iata
             },
+            // Form random color
             getRandomColor() {
                 var letters = '0123456789ABCDEF';
                 var color = '#';
@@ -221,11 +246,13 @@
                 }
                 return color;
             },
+            // Prepare objects before placing them on the map
             prepareRoutes(newRoutes, airline, color, isCombination) {
 
 
                 newRoutes.forEach(r => {
 
+                    // If airport/origin is not placed in the data yet
                     if (this.airportsOnMap[r.originIataCode] === undefined) {
                         this.airportsOnMap[r.originIataCode] = {}
                         this.airportsOnMap[r.originIataCode].color = color
@@ -314,6 +341,7 @@
                 })
 
             },
+            // Execute drawing on the map
             drawMap() {
 
                 this.airportsProcessed = {}
