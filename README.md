@@ -2,7 +2,7 @@
 
 # About application
 
-[For actual wireframes from application follow this link] (http://sasa-radovanovic.github.io/nvt.html)
+[For actual wireframes from application follow this link](http://sasa-radovanovic.github.io/nvt.html)
 
 
 Network visualization tool has 3 major parts:
