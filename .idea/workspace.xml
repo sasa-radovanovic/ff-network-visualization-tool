@@ -3,18 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="39f1a4d5-c6e0-4139-a810-c7a34379b661" name="Default" comment="Static visualization of network">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/domain/DomainMapper.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/domain/DomainMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirlineRepository.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirlineRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirlineRouteRepository.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirlineRouteRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirportRepository.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirportRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/CombinationRepository.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/CombinationRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/RotationRepository.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/RotationRepository.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/services/impl/AirportServiceImpl.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/services/impl/AirportServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/services/impl/CombinationServiceImpl.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/services/impl/CombinationServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/services/impl/RotationServiceImpl.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/services/impl/RotationServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue" afterPath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue" afterPath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-search.vue" afterPath="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-search.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/NvtApplication.java" afterPath="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/NvtApplication.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/nvt-frontend/target/" />
@@ -29,51 +18,33 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AirlineRouteService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/services/AirlineRouteService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AirlineRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirlineRepository.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="35" column="45" lean-forward="false" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AirlineRouteRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirlineRouteRepository.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="33" column="53" lean-forward="false" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CombinationRepository.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/CombinationRepository.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="36" column="50" lean-forward="false" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
+            <state relative-caret-position="315">
+              <caret line="25" column="33" lean-forward="false" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RotationRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/RotationRepository.java">
+      <file leaf-file-name="NvtApplication.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/NvtApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="33" column="47" lean-forward="false" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="47" />
+            <state relative-caret-position="300">
+              <caret line="20" column="27" lean-forward="false" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="3" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -92,7 +63,7 @@
       <file leaf-file-name="add-airline-dialog.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
+            <state relative-caret-position="1590">
               <caret line="106" column="9" lean-forward="false" selection-start-line="106" selection-start-column="9" selection-end-line="106" selection-end-column="9" />
               <folding />
             </state>
@@ -102,28 +73,48 @@
       <file leaf-file-name="airline-network.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1520">
+            <state relative-caret-position="4995">
               <caret line="343" column="41" lean-forward="false" selection-start-line="343" selection-start-column="41" selection-end-line="343" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="airline-search.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="airline-search.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-search.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
+            <state relative-caret-position="990">
               <caret line="67" column="64" lean-forward="false" selection-start-line="67" selection-start-column="64" selection-end-line="67" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AirportRepository.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirportRepository.java">
+      <file leaf-file-name="change-color-modal.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/change-color-modal.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="54" column="46" lean-forward="false" selection-start-line="54" selection-start-column="46" selection-end-line="54" selection-end-column="46" />
+            <state relative-caret-position="990">
+              <caret line="66" column="25" lean-forward="false" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="airport-comparison.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airports/airport-comparison.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="45" lean-forward="false" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Combination.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/entities/Combination.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="16" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -205,7 +196,6 @@
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/static-animation.vue" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/combination/add-combination-dialog.vue" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/change-color-modal.vue" />
-        <option value="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/NvtApplication.java" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/combination/animations/weekly-countdown.vue" />
         <option value="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/domain/AirportConnection.java" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/app/navigation.vue" />
@@ -245,6 +235,7 @@
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue" />
         <option value="$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-search.vue" />
+        <option value="$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/NvtApplication.java" />
       </list>
     </option>
   </component>
@@ -269,7 +260,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="957" />
+    <option name="height" value="955" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -287,8 +278,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -538,8 +527,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="network-visualization-tool" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ff-nvt" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nvt-backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="target" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1027,7 +1036,9 @@
       <workItem from="1509272647410" duration="15984000" />
       <workItem from="1509358218393" duration="1506000" />
       <workItem from="1509437269172" duration="16764000" />
-      <workItem from="1509522329667" duration="5560000" />
+      <workItem from="1509522329667" duration="17053000" />
+      <workItem from="1509604587117" duration="4737000" />
+      <workItem from="1509635706091" duration="79000" />
     </task>
     <task id="LOCAL-00001" summary="Build system changes">
       <created>1508691916550</created>
@@ -1047,11 +1058,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="123995000" />
+    <option name="totallyTimeSpent" value="140304000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="957" extended-state="6" />
-    <editor active="true" />
+    <frame x="0" y="23" width="1680" height="955" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1071,12 +1081,11 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3258294" sideWeight="0.495116" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25579977" sideWeight="0.33568904" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25579977" sideWeight="0.34923077" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22867298" sideWeight="0.495116" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25579977" sideWeight="0.66431093" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2280285" sideWeight="0.495116" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25579977" sideWeight="0.65076923" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32938388" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1084,6 +1093,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938388" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1110,35 +1120,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/services/airline-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="29" lean-forward="false" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/change-color-modal.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="990">
-          <caret line="66" column="25" lean-forward="false" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/services/rotation-service.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="28" lean-forward="false" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/NvtApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2265">
-          <caret line="182" column="48" lean-forward="false" selection-start-line="182" selection-start-column="48" selection-end-line="182" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/domain/AirportDto.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -1178,7 +1159,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="30" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1186,9 +1166,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="28" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1196,9 +1173,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="33" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1220,7 +1194,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="33" lean-forward="false" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1235,7 +1208,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
           <caret line="18" column="26" lean-forward="false" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1243,7 +1215,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="9" column="30" lean-forward="false" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1251,7 +1222,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
           <caret line="77" column="0" lean-forward="false" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1259,7 +1229,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-248">
           <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1284,7 +1253,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
           <caret line="105" column="32" lean-forward="false" selection-start-line="105" selection-start-column="32" selection-end-line="105" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1299,7 +1267,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="72" column="64" lean-forward="false" selection-start-line="72" selection-start-column="64" selection-end-line="72" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1307,7 +1274,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-163">
           <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="9" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1315,7 +1281,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
           <caret line="259" column="69" lean-forward="false" selection-start-line="259" selection-start-column="56" selection-end-line="259" selection-end-column="69" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1323,17 +1288,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="18" column="66" lean-forward="false" selection-start-line="18" selection-start-column="66" selection-end-line="18" selection-end-column="66" />
-          <folding>
-            <element signature="e#1865#2003#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airports/airport-comparison.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1561">
-          <caret line="155" column="32" lean-forward="false" selection-start-line="155" selection-start-column="26" selection-end-line="155" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1341,10 +1295,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4080">
           <caret line="272" column="16" lean-forward="false" selection-start-line="272" selection-start-column="16" selection-end-line="272" selection-end-column="16" />
-          <folding>
-            <marker date="1509460226000" expanded="true" signature="6454:6460" ph="..." />
-            <marker date="1509460226000" expanded="true" signature="6454:6472" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1352,9 +1302,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2790">
           <caret line="188" column="18" lean-forward="false" selection-start-line="188" selection-start-column="18" selection-end-line="188" selection-end-column="18" />
-          <folding>
-            <element signature="e#2343#2495#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1362,7 +1309,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
           <caret line="30" column="44" lean-forward="false" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1370,7 +1316,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
           <caret line="41" column="39" lean-forward="false" selection-start-line="41" selection-start-column="39" selection-end-line="41" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1378,7 +1323,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1386,7 +1330,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="750">
           <caret line="54" column="41" lean-forward="false" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1394,7 +1337,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-58">
           <caret line="139" column="0" lean-forward="false" selection-start-line="139" selection-start-column="0" selection-end-line="139" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1402,7 +1344,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
           <caret line="62" column="0" lean-forward="false" selection-start-line="62" selection-start-column="0" selection-end-line="64" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1410,7 +1351,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="40" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1418,7 +1358,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1305">
           <caret line="105" column="7" lean-forward="false" selection-start-line="105" selection-start-column="7" selection-end-line="105" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1426,7 +1365,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
           <caret line="40" column="13" lean-forward="true" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1434,7 +1372,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="229">
           <caret line="109" column="33" lean-forward="false" selection-start-line="109" selection-start-column="33" selection-end-line="109" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1442,7 +1379,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1450,7 +1386,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="257">
           <caret line="35" column="45" lean-forward="false" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1458,29 +1393,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="405">
           <caret line="33" column="53" lean-forward="false" selection-start-line="33" selection-start-column="53" selection-end-line="33" selection-end-column="53" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/AirportRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
+        <state relative-caret-position="705">
           <caret line="54" column="46" lean-forward="false" selection-start-line="54" selection-start-column="46" selection-end-line="54" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/CombinationRepository.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="36" column="50" lean-forward="false" selection-start-line="36" selection-start-column="50" selection-end-line="36" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/RotationRepository.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
+        <state relative-caret-position="405">
           <caret line="33" column="47" lean-forward="false" selection-start-line="33" selection-start-column="47" selection-end-line="33" selection-end-column="47" />
           <folding />
         </state>
@@ -1496,7 +1421,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-network.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1520">
+        <state relative-caret-position="4995">
           <caret line="343" column="41" lean-forward="false" selection-start-line="343" selection-start-column="41" selection-end-line="343" selection-end-column="41" />
           <folding />
         </state>
@@ -1504,7 +1429,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/add-airline-dialog.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
+        <state relative-caret-position="1590">
           <caret line="106" column="9" lean-forward="false" selection-start-line="106" selection-start-column="9" selection-end-line="106" selection-end-column="9" />
           <folding />
         </state>
@@ -1512,8 +1437,58 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/airline-search.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
+        <state relative-caret-position="990">
           <caret line="67" column="64" lean-forward="false" selection-start-line="67" selection-start-column="64" selection-end-line="67" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airlines/change-color-modal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="66" column="25" lean-forward="false" selection-start-line="66" selection-start-column="25" selection-end-line="66" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-frontend/src/components/airports/airport-comparison.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="45" lean-forward="false" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/entities/Combination.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="16" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/repositories/CombinationRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="25" column="33" lean-forward="false" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/java/frequentflyer/com/NvtApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="27" lean-forward="false" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nvt-backend/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="3" selection-end-column="40" />
           <folding />
         </state>
       </provider>
